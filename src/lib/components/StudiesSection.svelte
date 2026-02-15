@@ -7,7 +7,7 @@
 			title: 'Chronic Obstructive Pulmonary Disease (COPD)',
 			status: 'Enrolling',
 			description:
-				'Clinical study for individuals aged 40-80 diagnosed with moderate to severe COPD and a history of smoking (10+ years).',
+				'Clinical study for individuals aged 40-80 diagnosed with moderate to severe COPD and a history of smoking (10 + years).',
 			link: 'https://forms.office.com/Pages/ResponsePage.aspx?id=7SrJMp_Y9E-00dDZb8k73y_lJxBdoUtHiOhODDGZZjhUMTRYTlNTQVZGOVlYNDdQSkRSUDBITFlLTi4u&amp'
 		},
 		{
