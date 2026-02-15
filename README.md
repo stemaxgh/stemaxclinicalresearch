@@ -15,7 +15,7 @@ To recreate this project with the same configuration:
 
 ```sh
 # recreate this project
-pnpm dlx sv create --template minimal --no-types --add prettier eslint tailwindcss="plugins:none" sveltekit-adapter="adapter:cloudflare+cfTarget:pages" --install pnpm stemaxclinicalresearch
+pnpm dlx sv create --template minimal --no-types --add prettier eslint sveltekit-adapter="adapter:cloudflare+cfTarget:pages" tailwindcss="plugins:none" --install pnpm stemaxclinicalresearch
 ```
 
 ## Developing
