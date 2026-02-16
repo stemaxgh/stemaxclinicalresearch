@@ -3,30 +3,19 @@
 		Check,
 		ExternalLink,
 		Phone,
-		ClipboardCheck,
 		Menu,
 		X,
-		Search,
 		ChevronRight,
-		Clock,
-		Syringe,
-		Calendar,
 		Mail,
 		MapPin,
-		User
+		FileText,
+		ShieldCheck,
+		Microscope,
+		Users,
+		Building2
 	} from 'lucide-svelte';
-	import { fade, fly, slide } from 'svelte/transition';
-	import {
-		services,
-		serviceCategories,
-		stats,
-		features,
-		team,
-		testimonials,
-		studies,
-		getCategoryLabel,
-		getAllServices
-	} from '$lib/data';
+	import { fade, slide } from 'svelte/transition';
+	import { studies, pharmacovigilance, sponsors, team } from '$lib/data';
 
 	// --------------------------------------------------------------------------
 	// HEADER LOGIC
@@ -36,167 +25,38 @@
 		mobileMenuOpen = !mobileMenuOpen;
 	}
 
-	// --------------------------------------------------------------------------
-	// FOOTER LOGIC
-	// --------------------------------------------------------------------------
 	const currentYear = new Date().getFullYear();
-
-	// --------------------------------------------------------------------------
-	// SERVICE SECTION & MODAL LOGIC
-	// --------------------------------------------------------------------------
-	let activeTab = $state('all');
-	let searchQuery = $state('');
-	let showAllServices = $state(false);
-	let modalOpen = $state(false);
-	let selectedServiceDetails = $state(null);
-
-	function openServiceModal(service) {
-		selectedServiceDetails = service;
-		modalOpen = true;
-	}
-
-	function closeModal() {
-		modalOpen = false;
-		selectedServiceDetails = null;
-	}
-
-	const allServicesList = getAllServices();
-	const filterBySearchQuery = (service) => {
-		const query = searchQuery.toLowerCase();
-		return (
-			service.name.toLowerCase().includes(query) ||
-			(service.details && service.details.toLowerCase().includes(query))
-		);
-	};
-
-	let filteredServices = $derived(
-		searchQuery
-			? allServicesList.filter(filterBySearchQuery)
-			: activeTab === 'all'
-				? allServicesList
-				: services[activeTab]
-	);
-
-	let displayedServices = $derived(
-		activeTab === 'all' && !showAllServices && !searchQuery
-			? filteredServices.slice(0, 10)
-			: filteredServices
-	);
-
-	// --------------------------------------------------------------------------
-	// CTA SECTION LOGIC
-	// --------------------------------------------------------------------------
-	let selectedService = $state('');
-	let showPricing = $state(false);
-
-	let ctaServiceDetails = $derived(
-		selectedService ? allServicesList.find((service) => service.name === selectedService) : null
-	);
-
-	function handleSelectChange(event) {
-		selectedService = event.target.value;
-		showPricing = !!event.target.value;
-	}
 </script>
 
 <svelte:head>
-	<title>Stemax Healthcare Consultancy | Occupational Health Services UK</title>
-	<meta name="title" content="Stemax Healthcare Consultancy | Occupational Health Services UK" />
+	<title>Stemax Clinical Research | Clinical Trials & Pharmacovigilance</title>
 	<meta
 		name="description"
-		content="Professional occupational health services including vaccinations, medical assessments, and health surveillance for businesses across the UK. Based in Milton Keynes."
+		content="Leading clinical research organization providing comprehensive pharmacovigilance solutions and running clinical trials for pharmaceutical sponsors."
 	/>
-	<meta
-		name="keywords"
-		content="occupational health, corporate vaccinations, health assessments, medical services, OGUK medical, HGV medical, Milton Keynes"
-	/>
-	<link rel="canonical" href="https://www.stemaxmedical.co.uk" />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://www.stemaxmedical.co.uk" />
-	<meta
-		property="og:title"
-		content="Stemax Healthcare Consultancy | Professional Medical Services"
-	/>
-	<meta
-		property="og:description"
-		content="Comprehensive healthcare solutions for businesses including vaccinations, occupational health assessments, and mobile services."
-	/>
-	<meta property="og:image" content="https://www.stemaxmedical.co.uk/favicon.png" />
-	<meta property="twitter:card" content="summary_large_image" />
-	<meta property="twitter:url" content="https://www.stemaxmedical.co.uk" />
-	<meta
-		property="twitter:title"
-		content="Stemax Healthcare Consultancy | Professional Medical Services"
-	/>
-	<meta
-		property="twitter:description"
-		content="Comprehensive healthcare solutions for businesses including vaccinations, occupational health assessments, and mobile clinic services."
-	/>
-	<meta property="twitter:image" content="https://www.stemaxmedical.co.uk/twitter-image.jpg" />
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-	<link rel="manifest" href="/site.webmanifest" />
-	<meta name="theme-color" content="#047857" />
-	<meta name="author" content="Stemax Consult Healthcare Services Ltd" />
-	<meta name="robots" content="index, follow" />
-	<meta name="google" content="notranslate" />
-
-	<script type="application/ld+json">
-		{
-			"@context": "https://schema.org",
-			"@type": "Medical Clinic",
-			"name": "Stemax Healthcare Consultancy",
-			"image": "https://www.stemaxmedical.co.uk/favicon.png",
-			"url": "https://www.stemaxmedical.co.uk",
-			"telephone": "+441908032992",
-			"address": {
-				"@type": "PostalAddress",
-				"streetAddress": "Ground Floor Suite F, Old Stratford Business Park, Falcon Drive",
-				"addressLocality": "Old Stratford, Milton Keynes",
-				"postalCode": "MK19 6FG",
-				"addressCountry": "UK"
-			},
-			"geo": {
-				"@type": "GeoCoordinates",
-				"latitude": 52.1234,
-				"longitude": -0.5678
-			},
-			"openingHoursSpecification": {
-				"@type": "OpeningHoursSpecification",
-				"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-				"opens": "09:00",
-				"closes": "17:00"
-			},
-			"sameAs": [
-				"https://www.facebook.com/stemaxconsult",
-				"https://www.linkedin.com/company/stemax-consultancy"
-			]
-		}
-	</script>
 </svelte:head>
 
 <header
-	class="sticky top-0 z-50 border-b border-gray-100 bg-white/90 backdrop-blur-md transition-all duration-200 supports-backdrop-blur:bg-white/95"
+	class="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur-md transition-all duration-200"
 >
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="flex h-20 items-center justify-between">
 			<div class="flex shrink-0 items-center gap-3">
 				<div
-					class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 text-white shadow-lg"
+					class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-700 to-teal-800 text-white shadow-lg"
 				>
 					<span class="text-xl font-bold">S</span>
 				</div>
 				<div class="flex flex-col">
 					<span class="text-xl font-bold tracking-tight text-slate-900">STEMAX</span>
 					<span class="text-xs font-medium tracking-wide text-slate-500 uppercase"
-						>Healthcare Consultancy</span
+						>Clinical Research</span
 					>
 				</div>
 			</div>
 
 			<nav class="hidden space-x-1 md:flex">
-				{#each ['Services', 'Clinical Trials', 'About', 'Testimonials'] as item}
+				{#each ['Clinical Trials', 'Pharmacovigilance', 'For Sponsors', 'For Patients'] as item}
 					<a
 						href="#{item.toLowerCase().replace(' ', '-')}"
 						class="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-emerald-50 hover:text-emerald-700"
@@ -205,10 +65,10 @@
 					</a>
 				{/each}
 				<a
-					href="#book"
+					href="#contact"
 					class="ml-4 rounded-lg bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-emerald-800 hover:shadow-md active:translate-y-0.5"
 				>
-					Book Now
+					Contact Us
 				</a>
 			</nav>
 
@@ -232,7 +92,7 @@
 	{#if mobileMenuOpen}
 		<div transition:slide class="border-b border-gray-200 bg-white md:hidden" id="mobile-menu">
 			<div class="space-y-1 px-4 py-6">
-				{#each ['Services', 'Clinical Trials', 'About', 'Testimonials', 'Contact'] as item}
+				{#each ['Clinical Trials', 'Pharmacovigilance', 'For Sponsors', 'For Patients', 'Contact'] as item}
 					<a
 						href="#{item.toLowerCase().replace(' ', '-')}"
 						class="block rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-700"
@@ -241,13 +101,6 @@
 						{item}
 					</a>
 				{/each}
-				<a
-					href="#book"
-					class="mt-4 block w-full rounded-lg bg-emerald-700 px-3 py-3 text-center text-base font-medium text-white shadow-sm hover:bg-emerald-800"
-					onclick={toggleMobileMenu}
-				>
-					Book an Appointment
-				</a>
 			</div>
 		</div>
 	{/if}
@@ -255,7 +108,7 @@
 
 <main>
 	<section class="relative overflow-hidden bg-slate-50 pt-16 pb-20 lg:pt-32 lg:pb-28">
-		<div class="absolute inset-0 z-0 opacity-40">
+		<div class="absolute inset-0 z-0 opacity-30">
 			<div
 				class="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-emerald-200/50 blur-3xl filter"
 			></div>
@@ -265,326 +118,208 @@
 		</div>
 
 		<div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<div class="text-center lg:grid lg:grid-cols-2 lg:items-center lg:gap-16 lg:text-left">
-				<div>
-					<div
-						class="mb-6 inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700 ring-1 ring-emerald-600/20 ring-inset"
-					>
-						<span class="mr-2 h-1.5 w-1.5 rounded-full bg-emerald-600"></span>
-						Trusted Healthcare Partner since 2007
-					</div>
-					<h1 class="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
-						<span class="block">Professional Healthcare</span>
-						<span
-							class="block bg-gradient-to-r from-emerald-700 to-teal-600 bg-clip-text text-emerald-700 text-transparent"
-							>Solutions for Business</span
-						>
-					</h1>
-					<p class="mx-auto mt-6 max-w-2xl text-lg text-slate-600 lg:mx-0">
-						Stemax Consultancy offers comprehensive occupational health services, including medical
-						assessments, vaccinations, and health surveillance programs tailored to your company's
-						needs.
-					</p>
-					<div class="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
-						<a
-							href="#book"
-							class="inline-flex items-center justify-center rounded-xl bg-emerald-700 px-8 py-4 text-base font-semibold text-white shadow-lg transition-all hover:-translate-y-1 hover:bg-emerald-800 hover:shadow-emerald-900/20"
-						>
-							Book a Service
-						</a>
-						<a
-							href="#services"
-							class="inline-flex items-center justify-center rounded-xl bg-white px-8 py-4 text-base font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 transition-all hover:bg-slate-50 hover:text-emerald-700"
-						>
-							Explore Services
-						</a>
-					</div>
-
-					<div class="mt-12 hidden grid-cols-3 gap-8 border-t border-slate-200/60 pt-8 lg:grid">
-						{#each stats.slice(0, 3) as stat}
-							<div>
-								<p class="text-3xl font-bold text-slate-900">{stat.value}</p>
-								<p class="text-sm text-slate-500">{stat.label}</p>
-							</div>
-						{/each}
-					</div>
+			<div class="text-center">
+				<div
+					class="mb-6 inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700 ring-1 ring-emerald-600/20 ring-inset"
+				>
+					<span class="mr-2 h-1.5 w-1.5 rounded-full bg-emerald-600"></span>
+					Pivoting the Future of Medicine
 				</div>
-
-				<div class="relative mt-16 hidden lg:mt-0 lg:block">
-					<div
-						class="relative mx-auto w-full rounded-2xl bg-white p-8 shadow-2xl ring-1 ring-slate-900/5"
+				<h1 class="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+					<span class="block">Advanced Clinical Trials</span>
+					<span
+						class="block bg-gradient-to-r from-emerald-700 to-teal-600 bg-clip-text text-emerald-700 text-transparent"
+						>& Pharmacovigilance</span
 					>
-						<div class="mb-8 flex items-center justify-between">
-							<div class="h-3 w-20 rounded-full bg-slate-200"></div>
-							<div
-								class="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-600"
-							>
-								<User size={16} />
-							</div>
-						</div>
-						<div class="space-y-4">
-							<div
-								class="flex h-24 w-full gap-4 rounded-xl border border-slate-100 bg-slate-50 p-4"
-							>
-								<div class="h-12 w-12 shrink-0 rounded-lg bg-emerald-100"></div>
-								<div class="w-full space-y-2">
-									<div class="h-4 w-2/3 rounded bg-slate-200"></div>
-									<div class="h-3 w-1/2 rounded bg-slate-100"></div>
-								</div>
-							</div>
-							<div
-								class="flex h-24 w-full gap-4 rounded-xl border border-slate-100 bg-slate-50 p-4"
-							>
-								<div class="h-12 w-12 shrink-0 rounded-lg bg-blue-100"></div>
-								<div class="w-full space-y-2">
-									<div class="h-4 w-3/4 rounded bg-slate-200"></div>
-									<div class="h-3 w-1/3 rounded bg-slate-100"></div>
-								</div>
-							</div>
-							<div
-								class="flex h-24 w-full gap-4 rounded-xl border border-slate-100 bg-slate-50 p-4"
-							>
-								<div class="h-12 w-12 shrink-0 rounded-lg bg-orange-100"></div>
-								<div class="w-full space-y-2">
-									<div class="h-4 w-1/2 rounded bg-slate-200"></div>
-									<div class="h-3 w-2/3 rounded bg-slate-100"></div>
-								</div>
-							</div>
-						</div>
-						<div
-							class="absolute -right-6 -bottom-6 rounded-xl bg-slate-900 p-4 text-white shadow-xl"
-						>
-							<div class="flex items-center gap-3">
-								<div class="flex -space-x-2">
-									<div class="h-8 w-8 rounded-full bg-slate-700 ring-2 ring-slate-900"></div>
-									<div class="h-8 w-8 rounded-full bg-slate-600 ring-2 ring-slate-900"></div>
-									<div class="h-8 w-8 rounded-full bg-slate-500 ring-2 ring-slate-900"></div>
-								</div>
-								<div class="text-xs font-medium">
-									<span class="block text-emerald-400">500+</span>
-									Corporate Clients
-								</div>
-							</div>
-						</div>
-					</div>
+				</h1>
+				<p class="mx-auto mt-6 max-w-2xl text-lg text-slate-600">
+					Connecting pharmaceutical innovators with dedicated volunteer patients. We ensure rigorous
+					drug safety monitoring and efficient trial execution to bring life-changing treatments to
+					market.
+				</p>
+				<div class="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
+					<a
+						href="#for-sponsors"
+						class="inline-flex items-center justify-center rounded-xl bg-emerald-700 px-8 py-4 text-base font-semibold text-white shadow-lg transition-all hover:-translate-y-1 hover:bg-emerald-800"
+					>
+						For Sponsors
+					</a>
+					<a
+						href="#for-patients"
+						class="inline-flex items-center justify-center rounded-xl bg-white px-8 py-4 text-base font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 transition-all hover:bg-slate-50 hover:text-emerald-700"
+					>
+						Volunteer for Trials
+					</a>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<section class="bg-white py-20 lg:py-28">
+	<section id="for-sponsors" class="bg-white py-12 lg:py-16">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<div class="mx-auto mb-16 max-w-3xl text-center">
-				<h2 class="text-base leading-7 font-semibold tracking-wide text-emerald-600 uppercase">
-					Why Choose Stemax
-				</h2>
-				<p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-					Excellence in Occupational Health
-				</p>
-				<p class="mt-6 text-lg leading-8 text-slate-600">
-					We deliver professional healthcare services with efficiency, expertise, and a commitment
-					to your workforce's wellbeing.
-				</p>
-			</div>
-
-			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-				{#each features as feature}
+			<p class="text-center text-sm font-semibold tracking-wider text-slate-500 uppercase">
+				Trusted by Leading Pharmaceutical Partners
+			</p>
+			<div
+				class="mt-8 grid grid-cols-2 items-center justify-items-center gap-8 opacity-75 grayscale transition-all hover:opacity-100 hover:grayscale-0 md:grid-cols-4"
+			>
+				{#each sponsors as sponsor}
 					<div
-						class="group relative rounded-2xl border border-slate-200 bg-white p-8 transition-all hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl"
+						class="flex h-16 w-full items-center justify-center rounded-lg border border-slate-100 bg-slate-50 px-6 py-4 shadow-sm"
 					>
-						<div
-							class="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 transition-colors group-hover:bg-emerald-600 group-hover:text-white"
-						>
-							<Check class="h-7 w-7" />
-						</div>
-						<h3
-							class="text-xl font-bold text-slate-900 transition-colors group-hover:text-emerald-700"
-						>
-							{feature.title}
-						</h3>
-						<p class="mt-4 text-base leading-relaxed text-slate-600">
-							{feature.description}
-						</p>
+						<span class="text-center font-bold text-slate-700">{sponsor.name}</span>
 					</div>
 				{/each}
 			</div>
 		</div>
 	</section>
 
-	<section id="services" class="bg-slate-50 py-20 lg:py-32">
+	<section id="pharmacovigilance" class="bg-slate-50 py-20 lg:py-28">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<div class="mx-auto mb-12 max-w-3xl text-center">
+			<div class="mx-auto max-w-3xl text-center">
 				<h2 class="text-base leading-7 font-semibold tracking-wide text-emerald-600 uppercase">
-					Our Services
+					Drug Safety
 				</h2>
-				<p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-					Comprehensive Healthcare Solutions
+				<h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+					{pharmacovigilance.intro.title}
+				</h2>
+				<p class="mt-6 text-lg leading-8 text-slate-600">
+					{pharmacovigilance.intro.description}
+				</p>
+				<p class="mt-4 text-base leading-7 text-slate-500">
+					{pharmacovigilance.intro.subDescription}
 				</p>
 			</div>
 
-			<div class="flex flex-col gap-8">
-				<div class="relative mx-auto w-full max-w-lg">
+			<div class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+				{#each pharmacovigilance.services as service}
 					<div
-						class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"
+						class="group relative rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200 transition-all hover:-translate-y-1 hover:shadow-lg"
 					>
-						<Search class="h-5 w-5" />
+						<div
+							class="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700 group-hover:bg-emerald-600 group-hover:text-white"
+						>
+							<ShieldCheck class="h-6 w-6" />
+						</div>
+						<h3 class="mb-4 text-xl font-bold text-slate-900">{service.title}</h3>
+						<ul class="space-y-3">
+							{#each service.items as item}
+								<li class="flex items-start gap-3 text-sm text-slate-600">
+									<Check class="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
+									<span>{item}</span>
+								</li>
+							{/each}
+						</ul>
 					</div>
-					<input
-						type="text"
-						placeholder="Search services (e.g., 'Vaccine', 'HGV', 'Blood test')..."
-						bind:value={searchQuery}
-						class="block w-full rounded-full border-0 py-3.5 pr-4 pl-11 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600 focus:ring-inset sm:text-sm sm:leading-6"
-					/>
+				{/each}
+			</div>
+
+			<div class="mt-16 grid gap-8 lg:grid-cols-2">
+				<div class="rounded-3xl bg-slate-900 p-8 text-white shadow-xl lg:p-12">
+					<div class="flex items-center gap-4">
+						<FileText class="h-8 w-8 text-emerald-400" />
+						<h3 class="text-2xl font-bold">{pharmacovigilance.inspectionReadiness.title}</h3>
+					</div>
+					<p class="mt-4 text-slate-300">
+						{pharmacovigilance.inspectionReadiness.description}
+					</p>
+					<ul class="mt-6 space-y-3">
+						{#each pharmacovigilance.inspectionReadiness.items as item}
+							<li class="flex items-center gap-3 text-emerald-100">
+								<div class="h-1.5 w-1.5 rounded-full bg-emerald-400"></div>
+								{item}
+							</li>
+						{/each}
+					</ul>
+					<p class="mt-8 font-semibold text-emerald-400">
+						{pharmacovigilance.inspectionReadiness.conclusion}
+					</p>
 				</div>
 
-				<div class="flex flex-wrap justify-center gap-2">
-					{#each serviceCategories as category}
-						<button
-							onclick={() => (activeTab = category.id)}
-							class="rounded-full px-5 py-2 text-sm font-medium transition-all duration-200 {activeTab ===
-							category.id
-								? 'bg-emerald-700 text-white shadow-md'
-								: 'bg-white text-slate-600 shadow-sm ring-1 ring-slate-200 hover:bg-emerald-50 hover:text-emerald-700'}"
-						>
-							{category.label}
-							{#if category.id === 'all'}
-								<span
-									class="ml-2 inline-flex items-center justify-center rounded-full bg-white/20 px-2 py-0.5 text-xs font-semibold"
-								>
-									{allServicesList.length}
-								</span>
-							{:else if services[category.id]}
-								<span
-									class="ml-2 inline-flex items-center justify-center rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600"
-									class:text-white={activeTab === category.id}
-									class:bg-emerald-600={activeTab === category.id}
-								>
-									{services[category.id].length}
-								</span>
-							{/if}
-						</button>
-					{/each}
+				<div class="flex flex-col justify-center rounded-3xl bg-emerald-50 p-8 lg:p-12">
+					<h3 class="text-2xl font-bold text-emerald-900">{pharmacovigilance.values.title}</h3>
+					<p class="mt-4 text-lg text-emerald-800">
+						{pharmacovigilance.values.description}
+					</p>
+					<div class="mt-6 border-t border-emerald-200 pt-6">
+						<p class="leading-relaxed text-emerald-700">
+							{pharmacovigilance.values.goal}
+						</p>
+					</div>
 				</div>
 			</div>
 
-			<div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-8">
-				{#if filteredServices.length === 0}
-					<div class="col-span-full py-16 text-center">
-						<div
-							class="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-slate-100"
-						>
-							<Search class="h-8 w-8 text-slate-400" />
-						</div>
-						<h3 class="text-lg font-medium text-slate-900">No services found</h3>
-						<p class="mt-1 text-slate-500">Try adjusting your search terms or filter category.</p>
-						<button
-							onclick={() => (searchQuery = '')}
-							class="mt-6 font-medium text-emerald-600 hover:text-emerald-500"
-						>
-							Clear Search
-						</button>
-					</div>
-				{:else}
-					{#each displayedServices as service (service.name)}
-						<div
-							transition:fade={{ duration: 200 }}
-							class="flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all hover:-translate-y-1 hover:shadow-lg"
-						>
-							<div class="flex h-full flex-col p-6">
-								<div class="mb-4">
-									{#if service.category}
-										<span
-											class="mb-2 inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 ring-1 ring-emerald-600/20 ring-inset"
-										>
-											{getCategoryLabel(service.category)}
-										</span>
-									{/if}
-									<h3 class="mt-2 line-clamp-2 min-h-[3.5rem] text-lg font-bold text-slate-900">
-										{service.name}
-									</h3>
-									<p class="mt-2 text-2xl font-bold tracking-tight text-emerald-700">
-										{service.price}
-									</p>
-								</div>
-
-								<div class="mb-6 flex-grow space-y-3">
-									<div class="flex items-center gap-3 text-sm text-slate-600">
-										<Clock class="h-4 w-4 shrink-0 text-emerald-500" />
-										<span>{service.duration}</span>
-									</div>
-									{#if service.doses}
-										<div class="flex items-center gap-3 text-sm text-slate-600">
-											<Syringe class="h-4 w-4 shrink-0 text-emerald-500" />
-											<span>{service.doses} {service.doses === 1 ? 'dose' : 'doses'} required</span>
-										</div>
-									{/if}
-									{#if service.details}
-										<p class="mt-4 line-clamp-3 text-sm leading-relaxed text-slate-500">
-											{service.details}
-										</p>
-									{/if}
-								</div>
-
-								<button
-									onclick={() => openServiceModal(service)}
-									class="mt-auto flex w-full items-center justify-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
-								>
-									Book Appointment
-								</button>
-							</div>
-						</div>
-					{/each}
-
-					{#if activeTab === 'all' && !showAllServices && !searchQuery && filteredServices.length > 10}
-						<button
-							class="group flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-emerald-200 bg-emerald-50/50 p-8 text-center transition-all hover:border-emerald-300 hover:bg-emerald-50"
-							onclick={() => (showAllServices = true)}
-						>
-							<div
-								class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 group-hover:bg-emerald-200"
+			<div class="mt-16 overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-slate-200">
+				<div class="grid lg:grid-cols-2">
+					<div class="bg-emerald-700 p-8 text-white lg:p-12">
+						<h3 class="text-2xl font-bold">{pharmacovigilance.training.title}</h3>
+						<p class="mt-4 text-emerald-100">{pharmacovigilance.training.description}</p>
+						<p class="mt-8 text-lg font-semibold text-white">
+							{pharmacovigilance.training.conclusion}
+						</p>
+						<div class="mt-8">
+							<a
+								href="#contact"
+								class="inline-flex rounded-lg bg-white px-6 py-3 text-sm font-bold text-emerald-700 transition-colors hover:bg-emerald-50"
 							>
-								<ChevronRight class="h-6 w-6" />
+								Inquire About Training
+							</a>
+						</div>
+					</div>
+					<div class="p-8 lg:p-12">
+						<div class="grid gap-8 sm:grid-cols-2">
+							<div>
+								<h4 class="mb-4 font-bold text-slate-900">For Professionals</h4>
+								<ul class="space-y-2">
+									{#each pharmacovigilance.training.audiences as item}
+										<li class="flex items-start gap-2 text-sm text-slate-600">
+											<ChevronRight class="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
+											<span>{item}</span>
+										</li>
+									{/each}
+								</ul>
 							</div>
-							<p class="text-lg font-semibold text-emerald-900">View All Services</p>
-							<p class="text-sm text-emerald-600/80">
-								{filteredServices.length - 10} more available
-							</p>
-						</button>
-					{/if}
-				{/if}
+							<div>
+								<h4 class="mb-4 font-bold text-slate-900">Training Options</h4>
+								<ul class="space-y-2">
+									{#each pharmacovigilance.training.options as item}
+										<li class="flex items-start gap-2 text-sm text-slate-600">
+											<ChevronRight class="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
+											<span>{item}</span>
+										</li>
+									{/each}
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="mt-16 text-center">
-				<p class="mb-6 text-slate-600">Can't find what you're looking for?</p>
-				<a
-					href="#contact"
-					class="flex items-center justify-center gap-2 font-semibold text-emerald-700 hover:text-emerald-600"
-				>
-					Contact our support team <ChevronRight class="h-4 w-4" />
-				</a>
+			<div class="mt-12 text-center">
+				<p class="text-xl font-medium text-slate-900">{pharmacovigilance.intro.cta}</p>
 			</div>
 		</div>
 	</section>
 
 	<section id="clinical-trials" class="bg-white py-20 lg:py-28">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<div class="mx-auto mb-16 max-w-3xl md:text-center">
+			<div class="mx-auto mb-16 max-w-3xl text-center">
 				<h2 class="text-base leading-7 font-semibold tracking-wide text-emerald-600 uppercase">
-					Research & Development
+					Our Research
 				</h2>
 				<h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-					Current Clinical Trials
+					Past & Current Clinical Trials
 				</h2>
 				<p class="mt-4 text-lg text-slate-600">
-					Participate in medical research to help pave the way for future treatments. All related
-					evaluations are complimentary.
+					We have successfully partnered with sponsors to run diverse clinical trials, providing
+					vital data and care.
 				</p>
 			</div>
 
 			<div class="grid gap-8 md:grid-cols-2">
 				{#each studies as study}
 					<div
-						class="flex flex-col rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-lg"
+						class="flex flex-col rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition-all hover:border-emerald-200 hover:shadow-lg"
 					>
 						<div class="mb-5 flex items-center justify-between">
 							<span
@@ -592,12 +327,13 @@
 								class:bg-emerald-50={study.status === 'Enrolling'}
 								class:text-emerald-700={study.status === 'Enrolling'}
 								class:ring-emerald-600={study.status === 'Enrolling'}
-								class:bg-slate-50={study.status !== 'Enrolling'}
+								class:bg-slate-100={study.status !== 'Enrolling'}
 								class:text-slate-600={study.status !== 'Enrolling'}
-								class:ring-slate-500={study.status !== 'Enrolling'}
+								class:ring-slate-300={study.status !== 'Enrolling'}
 							>
 								{study.status}
 							</span>
+							<Microscope class="h-5 w-5 text-slate-400" />
 						</div>
 
 						<h3 class="mb-3 text-xl font-bold text-slate-900">
@@ -613,15 +349,16 @@
 								href={study.link}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-50 px-4 py-2.5 text-sm font-semibold text-emerald-700 transition-colors hover:bg-emerald-100"
+								id="for-patients"
+								class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-700"
 							>
-								Register Interest <ExternalLink class="h-4 w-4" />
+								Volunteer Now <ExternalLink class="h-4 w-4" />
 							</a>
 						{:else}
 							<div
-								class="inline-flex cursor-not-allowed items-center justify-center rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-medium text-slate-400"
+								class="inline-flex cursor-not-allowed items-center justify-center rounded-xl bg-slate-50 px-4 py-2.5 text-sm font-medium text-slate-400 ring-1 ring-slate-200 ring-inset"
 							>
-								Registration Closed
+								Study Closed
 							</div>
 						{/if}
 					</div>
@@ -634,15 +371,11 @@
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 			<div class="mx-auto mb-16 max-w-3xl text-center">
 				<h2 class="text-base leading-7 font-semibold tracking-wide text-emerald-400 uppercase">
-					About Us
+					Leadership
 				</h2>
 				<h2 class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-					Meet Our Specialists
+					Meet Our Research Specialists
 				</h2>
-				<p class="mt-6 text-lg leading-8 text-slate-300">
-					Our experienced healthcare professionals have been providing exceptional services to
-					businesses across the UK since 2007.
-				</p>
 			</div>
 
 			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -675,78 +408,60 @@
 		</div>
 	</section>
 
-	<section id="testimonials" class="bg-emerald-800 py-20 lg:py-28">
-		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<h2 class="mb-16 text-center text-3xl font-bold text-white">What Our Clients Say</h2>
-			<div class="grid gap-8 md:grid-cols-3">
-				{#each testimonials as testimonial}
-					<div class="relative rounded-2xl bg-white/10 p-8 ring-1 ring-white/20 backdrop-blur-sm">
-						<div class="absolute -top-4 -left-2 text-emerald-400 opacity-50">
-							<svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"
-								><path
-									d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z"
-								></path></svg
-							>
-						</div>
-						<p class="relative z-10 text-lg leading-relaxed font-medium text-white">
-							"{testimonial.quote}"
-						</p>
-						<div class="mt-6 border-t border-white/10 pt-6">
-							<p class="font-bold text-white">{testimonial.author}</p>
-							<p class="text-sm text-emerald-200">{testimonial.position}</p>
-						</div>
-					</div>
-				{/each}
-			</div>
-		</div>
-	</section>
-
-	<section id="book" class="bg-white py-20 lg:py-28">
+	<section id="contact" class="bg-white py-20 lg:py-28">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 			<div class="grid grid-cols-1 gap-16 lg:grid-cols-2">
 				<div>
 					<h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-						Ready to Book?
+						Partner with Stemax
 					</h2>
 					<p class="mt-4 text-lg text-slate-600">
-						Schedule an appointment with our healthcare professionals today. Use the form to request
-						a specific service or general consultation.
+						Whether you are a sponsor looking to run a trial, or a healthcare professional seeking
+						pharmacovigilance support, we are ready to help.
 					</p>
 
-					<div class="mt-10 space-y-6">
-						<div class="flex items-center gap-4">
+					<div class="mt-10 space-y-8">
+						<div class="flex gap-4">
 							<div
-								class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700"
+								class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700"
 							>
-								<Phone class="h-6 w-6" />
+								<Building2 class="h-6 w-6" />
 							</div>
 							<div>
-								<p class="text-sm font-medium text-slate-500">Call Us</p>
-								<p class="text-lg font-bold text-slate-900">+44 (0) 1908 03 2992</p>
-							</div>
-						</div>
-						<div class="flex items-center gap-4">
-							<div
-								class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700"
-							>
-								<Mail class="h-6 w-6" />
-							</div>
-							<div>
-								<p class="text-sm font-medium text-slate-500">Email Us</p>
-								<p class="text-lg font-bold text-slate-900">info@stemaxconsult.com</p>
-							</div>
-						</div>
-						<div class="flex items-center gap-4">
-							<div
-								class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700"
-							>
-								<MapPin class="h-6 w-6" />
-							</div>
-							<div>
-								<p class="text-sm font-medium text-slate-500">Visit Us</p>
-								<p class="text-lg font-bold text-slate-900">
-									Old Stratford Business Park, Milton Keynes
+								<h3 class="text-lg font-bold text-slate-900">For Sponsors</h3>
+								<p class="mt-1 text-slate-600">
+									Discuss site selection, feasibility, and pharmacovigilance partnerships.
 								</p>
+							</div>
+						</div>
+						<div class="flex gap-4">
+							<div
+								class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700"
+							>
+								<Users class="h-6 w-6" />
+							</div>
+							<div>
+								<h3 class="text-lg font-bold text-slate-900">For Volunteers</h3>
+								<p class="mt-1 text-slate-600">
+									Inquire about current enrolling studies and eligibility criteria.
+								</p>
+							</div>
+						</div>
+
+						<div class="mt-8 border-t border-slate-100 pt-8">
+							<div class="flex items-center gap-4">
+								<Phone class="h-5 w-5 text-emerald-600" />
+								<span class="font-semibold text-slate-900">+44 (0) 1908 03 2992</span>
+							</div>
+							<div class="mt-4 flex items-center gap-4">
+								<Mail class="h-5 w-5 text-emerald-600" />
+								<span class="font-semibold text-slate-900">info@stemaxconsult.com</span>
+							</div>
+							<div class="mt-4 flex items-center gap-4">
+								<MapPin class="h-5 w-5 text-emerald-600" />
+								<span class="text-slate-600"
+									>Old Stratford Business Park, Milton Keynes MK19 6FG</span
+								>
 							</div>
 						</div>
 					</div>
@@ -754,117 +469,61 @@
 
 				<div class="rounded-3xl bg-slate-50 p-8 shadow-sm ring-1 ring-slate-200 lg:p-10">
 					<form class="space-y-6">
-						<div>
-							<label for="service-select" class="block text-sm leading-6 font-medium text-slate-900"
-								>Select Service</label
-							>
-							<div class="mt-2">
-								<select
-									id="service-select"
-									bind:value={selectedService}
-									onchange={handleSelectChange}
-									class="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset focus:ring-2 focus:ring-emerald-600 focus:ring-inset sm:text-sm sm:leading-6"
-								>
-									<option value="">-- Choose a service --</option>
-									<optgroup label="Vaccinations">
-										{#each services.vaccines as s}
-											<option value={s.name}>{s.name} - {s.price}</option>
-										{/each}
-									</optgroup>
-									<optgroup label="Occupational Health">
-										{#each services.occupational as s}
-											<option value={s.name}>{s.name} - {s.price}</option>
-										{/each}
-									</optgroup>
-								</select>
-							</div>
-						</div>
-
-						{#if showPricing && ctaServiceDetails}
-							<div class="rounded-xl bg-white p-4 ring-1 ring-slate-200">
-								<div class="mb-2 flex items-center justify-between">
-									<h4 class="font-semibold text-slate-900">{ctaServiceDetails.name}</h4>
-									<span class="font-bold text-emerald-700">{ctaServiceDetails.price}</span>
-								</div>
-								<p class="text-sm text-slate-500">{ctaServiceDetails.duration}</p>
-							</div>
-						{/if}
-
+						<h3 class="text-xl font-bold text-slate-900">Send us a Message</h3>
 						<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
 							<div>
 								<label for="full-name" class="block text-sm leading-6 font-medium text-slate-900"
 									>Full Name</label
 								>
-								<div class="mt-2">
-									<input
-										type="text"
-										id="full-name"
-										class="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600 focus:ring-inset sm:text-sm sm:leading-6"
-										placeholder="John Doe"
-									/>
-								</div>
+								<input
+									type="text"
+									id="full-name"
+									class="mt-2 block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset focus:ring-2 focus:ring-emerald-600 sm:text-sm"
+								/>
 							</div>
 							<div>
 								<label for="email" class="block text-sm leading-6 font-medium text-slate-900"
 									>Email</label
 								>
-								<div class="mt-2">
-									<input
-										type="email"
-										id="email"
-										class="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600 focus:ring-inset sm:text-sm sm:leading-6"
-										placeholder="you@example.com"
-									/>
-								</div>
-							</div>
-						</div>
-
-						<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-							<div>
-								<label for="date" class="block text-sm leading-6 font-medium text-slate-900"
-									>Preferred Date</label
-								>
-								<div class="mt-2">
-									<input
-										type="date"
-										id="date"
-										class="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset focus:ring-2 focus:ring-emerald-600 focus:ring-inset sm:text-sm sm:leading-6"
-									/>
-								</div>
-							</div>
-							<div>
-								<label for="phone" class="block text-sm leading-6 font-medium text-slate-900"
-									>Phone</label
-								>
-								<div class="mt-2">
-									<input
-										type="tel"
-										id="phone"
-										class="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600 focus:ring-inset sm:text-sm sm:leading-6"
-										placeholder="+44..."
-									/>
-								</div>
+								<input
+									type="email"
+									id="email"
+									class="mt-2 block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset focus:ring-2 focus:ring-emerald-600 sm:text-sm"
+								/>
 							</div>
 						</div>
 
 						<div>
-							<label for="notes" class="block text-sm leading-6 font-medium text-slate-900"
-								>Additional Notes</label
+							<label for="interest" class="block text-sm leading-6 font-medium text-slate-900"
+								>I am interested in...</label
 							>
-							<div class="mt-2">
-								<textarea
-									id="notes"
-									rows="3"
-									class="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600 focus:ring-inset sm:text-sm sm:leading-6"
-								></textarea>
-							</div>
+							<select
+								id="interest"
+								class="mt-2 block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset focus:ring-2 focus:ring-emerald-600 sm:text-sm"
+							>
+								<option>Sponsoring a Trial</option>
+								<option>Pharmacovigilance Services</option>
+								<option>Volunteering for a Study</option>
+								<option>General Inquiry</option>
+							</select>
+						</div>
+
+						<div>
+							<label for="message" class="block text-sm leading-6 font-medium text-slate-900"
+								>Message</label
+							>
+							<textarea
+								id="message"
+								rows="4"
+								class="mt-2 block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset focus:ring-2 focus:ring-emerald-600 sm:text-sm"
+							></textarea>
 						</div>
 
 						<button
 							type="submit"
-							class="w-full rounded-xl bg-emerald-700 px-3.5 py-4 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+							class="w-full rounded-xl bg-emerald-700 px-3.5 py-4 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600"
 						>
-							Request Appointment
+							Submit Inquiry
 						</button>
 					</form>
 				</div>
@@ -872,93 +531,6 @@
 		</div>
 	</section>
 </main>
-
-{#if modalOpen && selectedServiceDetails}
-	<div class="relative z-50" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-		<div
-			transition:fade={{ duration: 300 }}
-			class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
-		></div>
-
-		<div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-			<div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-				<div
-					transition:fly={{ y: 20, duration: 300 }}
-					class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl"
-				>
-					<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-						<div class="sm:flex sm:items-start">
-							<div class="mt-3 w-full text-center sm:mt-0 sm:text-left">
-								<div class="mb-6 flex items-center justify-between">
-									<h3 class="text-2xl leading-6 font-bold text-slate-900" id="modal-title">
-										{selectedServiceDetails.name}
-									</h3>
-									<button
-										onclick={closeModal}
-										class="rounded-full bg-slate-100 p-2 text-slate-400 hover:bg-slate-200 hover:text-slate-500"
-									>
-										<X class="h-5 w-5" />
-									</button>
-								</div>
-
-								<div class="mb-8 rounded-xl bg-slate-50 p-6 ring-1 ring-slate-200">
-									<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-										<div>
-											<p class="text-sm font-medium text-slate-500">Price</p>
-											<p class="text-xl font-bold text-emerald-700">
-												{selectedServiceDetails.price}
-											</p>
-										</div>
-										<div>
-											<p class="text-sm font-medium text-slate-500">Duration</p>
-											<p class="text-base text-slate-900">{selectedServiceDetails.duration}</p>
-										</div>
-										{#if selectedServiceDetails.doses}
-											<div>
-												<p class="text-sm font-medium text-slate-500">Required Doses</p>
-												<p class="text-base text-slate-900">
-													{selectedServiceDetails.doses}
-												</p>
-											</div>
-										{/if}
-									</div>
-									{#if selectedServiceDetails.details}
-										<div class="mt-4 border-t border-slate-200 pt-4">
-											<p class="text-sm text-slate-600">{selectedServiceDetails.details}</p>
-										</div>
-									{/if}
-								</div>
-
-								<div class="rounded-xl border border-emerald-100 bg-emerald-50/50 p-6">
-									<h4 class="mb-4 font-semibold text-emerald-900">Quick Booking Request</h4>
-									<form class="space-y-4">
-										<div class="grid grid-cols-2 gap-4">
-											<input
-												type="text"
-												placeholder="Name"
-												class="w-full rounded-lg border-slate-300 py-2.5 text-sm focus:ring-emerald-600"
-											/>
-											<input
-												type="tel"
-												placeholder="Phone"
-												class="w-full rounded-lg border-slate-300 py-2.5 text-sm focus:ring-emerald-600"
-											/>
-										</div>
-										<button
-											class="w-full rounded-lg bg-emerald-700 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-emerald-800"
-										>
-											Submit Request
-										</button>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-{/if}
 
 <footer class="bg-slate-900 py-12 text-slate-400">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -973,49 +545,41 @@
 					<span class="text-xl font-bold text-white">STEMAX</span>
 				</div>
 				<p class="text-sm leading-6">
-					Providing quality healthcare services to businesses across the UK since 2007. Regulated by
-					Care Quality Commission.
+					Excellence in Clinical Research and Pharmacovigilance. Regulated by Care Quality
+					Commission.
 				</p>
-				<div class="flex gap-4"></div>
 			</div>
 
 			<div>
 				<h3 class="text-sm leading-6 font-semibold text-white">Services</h3>
 				<ul class="mt-4 space-y-2 text-sm">
-					<li><a href="#services" class="hover:text-emerald-400">Vaccinations</a></li>
-					<li><a href="#services" class="hover:text-emerald-400">Immune Support</a></li>
-					<li><a href="#services" class="hover:text-emerald-400">Occupational Health</a></li>
-					<li><a href="#services" class="hover:text-emerald-400">Blood Tests</a></li>
-				</ul>
-			</div>
-
-			<div>
-				<h3 class="text-sm leading-6 font-semibold text-white">Company</h3>
-				<ul class="mt-4 space-y-2 text-sm">
-					<li><a href="#about" class="hover:text-emerald-400">About Us</a></li>
-					<li><a href="#testimonials" class="hover:text-emerald-400">Testimonials</a></li>
 					<li><a href="#clinical-trials" class="hover:text-emerald-400">Clinical Trials</a></li>
-					<li><a href="#contact" class="hover:text-emerald-400">Contact</a></li>
+					<li>
+						<a href="#pharmacovigilance" class="hover:text-emerald-400">Adverse Event Reporting</a>
+					</li>
+					<li>
+						<a href="#pharmacovigilance" class="hover:text-emerald-400">Risk Management</a>
+					</li>
+					<li>
+						<a href="#pharmacovigilance" class="hover:text-emerald-400">Training Programs</a>
+					</li>
 				</ul>
 			</div>
 
 			<div>
-				<h3 class="text-sm leading-6 font-semibold text-white">Contact</h3>
-				<ul class="mt-4 space-y-3 text-sm">
-					<li class="flex items-start gap-3">
-						<MapPin class="h-5 w-5 shrink-0 text-emerald-500" />
-						<span>Old Stratford Business Park,<br />Milton Keynes MK19 6FG</span>
-					</li>
-					<li class="flex items-center gap-3">
-						<Phone class="h-5 w-5 shrink-0 text-emerald-500" />
-						<a href="tel:+441908032992" class="hover:text-white">+44 (0) 1908 03 2992</a>
-					</li>
-					<li class="flex items-center gap-3">
-						<Mail class="h-5 w-5 shrink-0 text-emerald-500" />
-						<a href="mailto:info@stemaxconsult.com" class="hover:text-white"
-							>info@stemaxconsult.com</a
-						>
-					</li>
+				<h3 class="text-sm leading-6 font-semibold text-white">Partners</h3>
+				<ul class="mt-4 space-y-2 text-sm">
+					<li><a href="#for-sponsors" class="hover:text-emerald-400">For Sponsors</a></li>
+					<li><a href="#for-patients" class="hover:text-emerald-400">For Volunteers</a></li>
+					<li><a href="#contact" class="hover:text-emerald-400">Contact Support</a></li>
+				</ul>
+			</div>
+
+			<div>
+				<h3 class="text-sm leading-6 font-semibold text-white">Legal</h3>
+				<ul class="mt-4 space-y-2 text-sm">
+					<li><a href="#" class="hover:text-emerald-400">Privacy Policy</a></li>
+					<li><a href="#" class="hover:text-emerald-400">Terms of Service</a></li>
 				</ul>
 			</div>
 		</div>

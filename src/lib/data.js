@@ -1,395 +1,106 @@
 // src/lib/data.js
 
-export const services = {
-	vaccines: [
+export const sponsors = [
+	{ name: 'Biohaven Pharmaceuticals' },
+	{ name: 'Clinical Research Payment Network' },
+	{ name: 'Accelsiors' },
+	{ name: 'Moderna' }
+];
+
+export const pharmacovigilance = {
+	intro: {
+		title: 'Safeguarding Lives. Ensuring Drug Safety.',
+		description:
+			'With a strong commitment to patient safety and regulatory excellence, we provide comprehensive pharmacovigilance solutions to pharmaceutical companies, healthcare professionals, and research organizations worldwide.',
+		subDescription:
+			'Our expert team leverages advanced technologies and global regulatory standards to monitor, assess, and mitigate risks associated with medicinal products. Together, we ensure safer healthcare and full lifecycle drug safety compliance.',
+		cta: 'We would love to hear from you — book a consultation to discuss your pharmacovigilance needs.'
+	},
+	values: {
+		title: 'Our Values',
+		description:
+			'We are committed to maintaining the highest ethical and regulatory standards across all areas of our operations.',
+		goal: 'Our goal is to work closely with sponsors, healthcare providers, and regulatory authorities, leveraging innovative technologies to deliver exceptional pharmacovigilance solutions while ensuring the safety, efficacy, and compliance of medicinal products through rigorous safety practices.'
+	},
+	services: [
 		{
-			name: 'Hepatitis B',
-			price: '£55.00',
-			duration: '0, 1 & 6 months',
-			doses: 3,
-			booster: '5 years',
-			details: 'Protects against Hepatitis B virus that can cause liver inflammation and damage.'
+			title: 'Adverse Event Reporting and Management',
+			items: [
+				'Streamlined reporting systems for adverse drug reactions (ADRs)',
+				'End-to-end case processing and lifecycle management',
+				'Real-time safety monitoring and signal identification',
+				'Global regulatory submission compliance'
+			]
 		},
 		{
-			name: 'Hepatitis B + Nurse visit',
-			price: '£60.00',
-			duration: '0, 1 & 6 months',
-			doses: 3
+			title: 'Regulatory Compliance Support',
+			items: [
+				'Adherence to global pharmacovigilance regulations',
+				'Customized solutions for local and international markets',
+				'Audit preparation and inspection readiness',
+				'QPPV support and pharmacovigilance system oversight'
+			]
 		},
 		{
-			name: 'MMR (Measles/Mumps/Rubella)',
-			price: '£70.00',
-			duration: 'Two doses required',
-			doses: 2,
-			details:
-				'Protects against measles, mumps, and rubella viruses which can cause serious complications.'
+			title: 'Literature Monitoring and Medical Writing',
+			items: [
+				'Comprehensive scientific literature surveillance',
+				'Preparation of high-quality pharmacovigilance documentation',
+				'Narrative writing, aggregate reports, and regulatory submissions'
+			]
 		},
 		{
-			name: 'MMR + Nurse visit',
-			price: '£75.00',
-			duration: 'Two doses required',
-			doses: 2
+			title: 'Risk Management Services',
+			items: [
+				'Development and implementation of Risk Management Plans (RMPs)',
+				'Periodic Safety Update Reports (PSURs)',
+				'Risk–Benefit Evaluation Reports',
+				'Proactive safety strategies for high-risk medicinal products'
+			]
 		},
 		{
-			name: 'Chicken Pox (varicella)',
-			price: '£70.00',
-			duration: 'Two doses required',
-			doses: 2,
-			details: 'Provides immunity against the varicella virus which causes chickenpox.'
-		},
-		{
-			name: 'Chicken Pox + Nurse visit',
-			price: '£75.00',
-			duration: 'Two doses required',
-			doses: 2
-		},
-		{
-			name: 'Mantoux Test & Read (skin test)',
-			price: '£70.00',
-			duration: 'Test 1st day, Reading at 72 hrs'
-		},
-		{
-			name: 'Mantoux Test & Read + Nurse visit',
-			price: '£80.00',
-			duration: 'Test 1st day, Reading at 72 hrs'
-		},
-		{
-			name: 'BCG TB vaccines',
-			price: '£45.00',
-			duration: 'One dose',
-			doses: 1
-		},
-		{
-			name: 'BCG Scar verify',
-			price: '£35.00',
-			duration: 'One visit'
+			title: 'Signal Detection and Assessment',
+			items: [
+				'Advanced data mining and statistical safety analysis',
+				'Early detection of emerging safety concerns',
+				'Collaborative safety reviews with regulatory authorities'
+			]
 		}
 	],
-	immune: [
-		{
-			name: 'Immune Booster (single)',
-			price: '£150.00',
-			duration: 'One session',
-			doses: 1,
-			details: 'Vitamin and mineral IV therapy to help boost your immune system.'
-		},
-		{
-			name: 'Immune Booster (5 sessions)',
-			price: '£650.00',
-			duration: 'Five sessions',
-			doses: 5
-		},
-		{
-			name: 'Vit C (10g) + glutathione (600mg)',
-			price: '£110.00',
-			duration: 'One session',
-			doses: 1,
-			details: 'High-dose vitamin C combined with glutathione for antioxidant support.'
-		},
-		{
-			name: 'Myers Cocktail',
-			price: '£170.00',
-			duration: 'One session',
-			doses: 1,
-			details:
-				'A nutrient cocktail given intravenously to help with various health conditions and improve energy.'
-		},
-		{
-			name: 'Glutathione 1200mg (alone)',
-			price: '£80.00',
-			duration: 'One session',
-			doses: 1
-		},
-		{
-			name: 'B12 Methylcobalamin 5mg / 1ml',
-			price: '£40.00',
-			duration: 'One injection',
-			doses: 1
-		}
-	],
-	occupational: [
-		{
-			name: 'Safety Critical Medical Assessment',
-			price: 'POA',
-			duration: 'One session',
-			details: 'Comprehensive medical assessment for safety-critical roles.'
-		},
-		{
-			name: 'HGV/LGV/PSV medical',
-			price: '£50.00',
-			duration: 'One session',
-			details:
-				'Medical assessment required for Heavy Goods Vehicle, Large Goods Vehicle, or Public Service Vehicle licenses.'
-		},
-		{
-			name: 'Pre-employment health questionnaire (paper-screen only)',
-			price: '£25.00',
-			duration: 'One assessment'
-		},
-		{
-			name: 'Pre-employment health questionnaire with follow up',
-			price: '£100.00',
-			duration: 'Assessment with telephone consult'
-		},
-		{
-			name: 'Preemployment (fitness for work) medical assessment',
-			price: '£140.00',
-			duration: 'One session'
-		},
-		{
-			name: 'Oil & Gas UK (OGUK) medical',
-			price: '£200.00',
-			duration: 'One session'
-		},
-		{
-			name: 'Oil & Gas UK (OGUK) medical plus ERT',
-			price: '£250.00',
-			duration: 'One session'
-		},
-		{
-			name: 'Oil & Gas UK (OGUK) medical plus Fit to train',
-			price: '£300.00',
-			duration: 'One session'
-		},
-		{
-			name: 'In water Fit to Train medicals',
-			price: '£120.00',
-			duration: 'One session'
-		},
-		{
-			name: 'Working at height medicals',
-			price: '£100.00',
-			duration: 'One session'
-		},
-		{
-			name: 'HSE diving medical',
-			price: '£150.00',
-			duration: 'One session'
-		},
-		{
-			name: 'Padi diving medical',
-			price: '£60.00',
-			duration: 'One session'
-		}
-	],
-	bloodtests: [
-		{
-			name: 'Full blood Count',
-			price: '£40.00',
-			duration: 'One test',
-			details:
-				'Measures several components of your blood including red and white blood cells, and platelets.'
-		},
-		{
-			name: 'Biochemistry plus liver function tests',
-			price: '£45.00',
-			duration: 'One test',
-			details: 'Comprehensive blood test assessing liver function and general biochemistry markers.'
-		},
-		{
-			name: 'Hepatitis B antibody (post immunisation)',
-			price: '£50.00',
-			duration: 'One test'
-		},
-		{
-			name: 'Hepatitis B core antibodies',
-			price: '£50.00',
-			duration: 'One test'
-		},
-		{
-			name: 'Hepatitis A antibodies',
-			price: '£45.00',
-			duration: 'One test'
-		},
-		{
-			name: 'Measles, Mumps, Rubella antibodies',
-			price: '£100.00',
-			duration: 'One test'
-		},
-		{
-			name: 'Chicken pox (Varicella) antibodies',
-			price: '£45.00',
-			duration: 'One test'
-		},
-		{
-			name: 'TB Quantiferon Gold',
-			price: '£70.00',
-			duration: 'One test'
-		},
-		{
-			name: 'Drug test 10 part',
-			price: '£45.00',
-			duration: 'One test'
-		},
-		{
-			name: 'Alcohol test',
-			price: '£25.00',
-			duration: 'One test'
-		}
-	],
-	consultation: [
-		{
-			name: '60 minutes Physician Consultation',
-			price: '£260.00',
-			duration: 'One consultation'
-		},
-		{
-			name: '30 minutes Physician Consultation',
-			price: '£120.00',
-			duration: 'One consultation'
-		},
-		{
-			name: '60 minutes Nutritional Consultation',
-			price: '£120.00',
-			duration: 'One consultation'
-		},
-		{
-			name: '30 minutes Nutritional Consultation',
-			price: '£60.00',
-			duration: 'One consultation'
-		},
-		{
-			name: '60 minutes Psychological counselling',
-			price: '£100.00',
-			duration: 'One consultation'
-		},
-		{
-			name: '30 minutes Psychological counselling',
-			price: '£60.00',
-			duration: 'One consultation'
-		}
-	],
-	diagnostic: [
-		{
-			name: 'Basic (Core Diagnostic test) FDx01',
-			price: '£175.00',
-			duration: 'One test'
-		},
-		{
-			name: 'Comprehensive (Maximum Diagnostic test) FDx02',
-			price: '£340.00',
-			duration: 'One test'
-		},
-		{
-			name: 'Vital (Diagnostic test) FDx03',
-			price: '£285.00',
-			duration: 'One test'
-		},
-		{
-			name: 'Thyroid (CoreDiagnostic test) FDx14',
-			price: '£200.00',
-			duration: 'One test'
-		},
-		{
-			name: 'Thyroid (VitalDiagnostic test) FDx15',
-			price: '£340.00',
-			duration: 'One test'
-		},
-		{
-			name: 'Female Health FDx18',
-			price: '£380.00',
-			duration: 'One test'
-		},
-		{
-			name: 'Male Health FDx19',
-			price: '£350.00',
-			duration: 'One test'
-		},
-		{
-			name: 'Vitamins FDx04',
-			price: '£70.00',
-			duration: 'One test'
-		}
-	]
+	inspectionReadiness: {
+		title: 'Inspection Readiness Services',
+		description:
+			'Our customized programs help pharmaceutical companies prepare for regulatory inspections while ensuring full pharmacovigilance compliance.',
+		items: [
+			'Inspection readiness training',
+			'Pharmacovigilance system master file (PSMF) support',
+			'Internal audits',
+			'Mock inspections and interviews',
+			'Qualified Person for Pharmacovigilance (QPPV) representation'
+		],
+		conclusion: 'We help you achieve full regulatory confidence and inspection success.'
+	},
+	training: {
+		title: 'Pharmacovigilance Training Programs',
+		description:
+			'Interested in pharmacovigilance training? We offer comprehensive training programs tailored for:',
+		audiences: [
+			'Professionals entering pharmaceutical safety roles',
+			'Experienced pharmacovigilance specialists',
+			'Senior management teams'
+		],
+		options: [
+			'One-on-one sessions',
+			'Small group workshops',
+			'Introductory pharmacovigilance for non-scientists',
+			'Drug safety and risk management training',
+			'In-house corporate training',
+			'SOP development and implementation training'
+		],
+		conclusion:
+			'Strengthen your expertise. Advance your regulatory confidence. Elevate your pharmacovigilance systems.'
+	}
 };
-
-export const serviceCategories = [
-	{ id: 'all', label: 'All Services' },
-	{ id: 'vaccines', label: 'Vaccinations' },
-	{ id: 'immune', label: 'Immune Support' },
-	{ id: 'occupational', label: 'Occupational Health' },
-	{ id: 'bloodtests', label: 'Blood Tests' },
-	{ id: 'consultation', label: 'Consultations' },
-	{ id: 'diagnostic', label: 'Diagnostic Tests' }
-];
-
-export const stats = [
-	{ value: '15+', label: 'Years Experience' },
-	{ value: '500+', label: 'Corporate Clients' },
-	{ value: '25k+', label: 'Vaccinations' },
-	{ value: '98%', label: 'Client Satisfaction' }
-];
-
-export const features = [
-	{
-		title: 'Corporate Vaccinations',
-		description:
-			'Protect your workforce from preventable diseases with our comprehensive vaccination programs delivered at your workplace.'
-	},
-	{
-		title: 'Occupational Health',
-		description:
-			'Ensure your employees are fit for their roles with our detailed medical assessments tailored to your industry requirements.'
-	},
-	{
-		title: 'Mobile Clinic Services',
-		description:
-			'Our healthcare professionals can visit your workplace, minimizing disruption and maximizing convenience for your team.'
-	},
-	{
-		title: 'Industry Solutions',
-		description:
-			'Specialized services for oil & gas, transportation, healthcare, and other sectors with unique health and safety requirements.'
-	}
-];
-
-export const team = [
-	{
-		name: 'Dr. Sarah Williams',
-		role: 'Medical Director',
-		bio: 'Dr. Williams has over 15 years of experience in occupational health and is a specialist in corporate wellness programs.',
-		color: 'bg-emerald-600'
-	},
-	{
-		name: 'James Thompson',
-		role: 'Head of Occupational Health',
-		bio: 'James specializes in health surveillance and workplace assessments for high-risk industries including oil and gas.',
-		color: 'bg-emerald-700'
-	},
-	{
-		name: 'Dr. Michael Chen',
-		role: 'Vaccination Specialist',
-		bio: 'Dr. Chen leads our vaccination program and has extensive experience in travel medicine and immunology.',
-		color: 'bg-emerald-800'
-	},
-	{
-		name: 'Emma Roberts',
-		role: 'Senior Nurse Practitioner',
-		bio: 'Emma has specialized in occupational health for 10 years and coordinates our on-site vaccination programs.',
-		color: 'bg-emerald-600'
-	}
-];
-
-export const testimonials = [
-	{
-		quote:
-			'Stemax Consultancy provided excellent occupational health services for our company. Their professional approach and attention to detail impressed us greatly.',
-		author: 'John Duningham',
-		position: 'HR Director, Global Logistics Ltd'
-	},
-	{
-		quote:
-			'The team at Stemax made our corporate health assessment process smooth and efficient. Their mobile vaccination service saved us countless work hours.',
-		author: 'Sarah Mitchell',
-		position: 'Operations Manager, Tech Innovations Inc'
-	},
-	{
-		quote:
-			"We've been using Stemax for all our offshore medical certifications for over 3 years. Their understanding of oil and gas requirements is exceptional.",
-		author: 'David Thompson',
-		position: 'Safety Officer, North Sea Operations'
-	}
-];
 
 export const studies = [
 	{
@@ -421,23 +132,38 @@ export const studies = [
 	}
 ];
 
-export function getCategoryLabel(categoryId) {
-	const categoryMap = {
-		vaccines: 'Vaccination',
-		immune: 'Immune Support',
-		occupational: 'Occupational Health',
-		bloodtests: 'Blood Test',
-		consultation: 'Consultation',
-		diagnostic: 'Diagnostic Test'
-	};
-	return categoryMap[categoryId] || '';
-}
+export const team = [
+	{
+		name: 'Dr. Sarah Williams',
+		role: 'Medical Director',
+		bio: 'Dr. Williams has over 15 years of experience in clinical research and is a specialist in trial oversight.',
+		color: 'bg-emerald-600'
+	},
+	{
+		name: 'James Thompson',
+		role: 'Head of Clinical Operations',
+		bio: 'James specializes in trial management and regulatory compliance for international studies.',
+		color: 'bg-emerald-700'
+	},
+	{
+		name: 'Dr. Michael Chen',
+		role: 'Principal Investigator',
+		bio: 'Dr. Chen leads our clinical trials with extensive experience in immunology and internal medicine.',
+		color: 'bg-emerald-800'
+	},
+	{
+		name: 'Emma Roberts',
+		role: 'Senior Research Nurse',
+		bio: 'Emma coordinates patient care and ensures strict adherence to study protocols.',
+		color: 'bg-emerald-600'
+	}
+];
 
-export function getAllServices() {
-	return Object.keys(services).flatMap((category) =>
-		services[category].map((service) => ({
-			...service,
-			category
-		}))
-	);
-}
+// Retaining older data structures just in case, but they are not used in the new page
+export const services = {};
+export const serviceCategories = [];
+export const stats = [];
+export const features = [];
+export const testimonials = [];
+export function getCategoryLabel() {}
+export function getAllServices() {}
