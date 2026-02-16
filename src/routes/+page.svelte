@@ -584,7 +584,7 @@
 			</div>
 		</div>
 		<div class="mt-12 border-t border-slate-800 pt-8 text-center text-xs">
-			<p>&copy; {currentYear} Stemax Consult Healthcare Services Ltd. All rights reserved.</p>
+			<p>&copy; {currentYear} Stema x Consult Healthcare Services Ltd. All rights reserved.</p>
 		</div>
 	</div>
 </footer>
