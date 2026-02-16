@@ -34,7 +34,7 @@
 	];
 </script>
 
-<section id="studies" class="py-20" style="background-color: {colors.background}">
+<section id="clinical-trials" class="py-20" style="background-color: {colors.background}">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="mb-12 text-center">
 			<h2 class="text-3xl font-bold tracking-tight sm:text-4xl" style="color: {colors.secondary}">

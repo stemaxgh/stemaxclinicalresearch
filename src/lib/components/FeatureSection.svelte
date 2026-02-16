@@ -48,9 +48,9 @@
 
 		<div class="mt-10">
 			<div class="md:grid md:grid-cols-2 md:gap-8">
-				{#each features as feature}
+				{#each features as feature (feature.id)}
 					<div class="mt-4 flex border border-gray-200 p-6 md:mt-0">
-						<div class="flex-shrink-0">
+						<div class="shrink-0">
 							<div
 								class="flex h-12 w-12 items-center justify-center text-white"
 								style:background-color={colors.primary}

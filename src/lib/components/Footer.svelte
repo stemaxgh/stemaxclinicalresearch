@@ -1,6 +1,7 @@
 <script>
 	// Define colors for the component
 	import { colors } from '$lib/data.js';
+	import cqc from '$lib/assets/cqc.png';
 
 	// Get current year for copyright text
 	const currentYear = new Date().getFullYear();
@@ -30,9 +31,9 @@
 						class="inline-block"
 					>
 						<img
-							src="assets/cqc.png"
+							src={cqc}
 							alt="CQC Regulated"
-							class="h-[25px] w-auto rounded border-2 border-gray-400 transition-colors hover:border-white"
+							class="h-6.25 w-auto rounded border-2 border-gray-400 transition-colors hover:border-white"
 						/>
 					</a>
 				</div>
