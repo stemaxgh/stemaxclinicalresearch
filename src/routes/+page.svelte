@@ -1,356 +1,32 @@
 <script>
-	import { Check, ExternalLink, Phone, ClipboardCheck } from 'lucide-svelte';
-	// import cqc from '$lib/assets/cqc.png'; // Uncomment if you have the asset
-	// import favicon from '$lib/assets/favicon.png'; // Uncomment if you have the asset
-
-	// --------------------------------------------------------------------------
-	// DATA (from src/lib/data.js)
-	// --------------------------------------------------------------------------
-	const colors = {
-		primary: '#047857', // emerald-700
-		primaryDark: '#065f46', // emerald-800
-		primaryLight: '#059669', // emerald-600
-		secondary: '#0f172a', // slate-900
-		background: '#f8fafc', // slate-50
-		light: '#ffffff',
-		text: '#1e293b', // slate-800
-		textLight: '#64748b' // slate-500
-	};
-
-	const services = {
-		vaccines: [
-			{
-				name: 'Hepatitis B',
-				price: '£55.00',
-				duration: '0, 1 & 6 months',
-				doses: 3,
-				booster: '5 years',
-				details: 'Protects against Hepatitis B virus that can cause liver inflammation and damage.'
-			},
-			{
-				name: 'Hepatitis B + Nurse visit',
-				price: '£60.00',
-				duration: '0, 1 & 6 months',
-				doses: 3
-			},
-			{
-				name: 'MMR (Measles/Mumps/Rubella)',
-				price: '£70.00',
-				duration: 'Two doses required',
-				doses: 2,
-				details:
-					'Protects against measles, mumps, and rubella viruses which can cause serious complications.'
-			},
-			{
-				name: 'MMR + Nurse visit',
-				price: '£75.00',
-				duration: 'Two doses required',
-				doses: 2
-			},
-			{
-				name: 'Chicken Pox (varicella)',
-				price: '£70.00',
-				duration: 'Two doses required',
-				doses: 2,
-				details: 'Provides immunity against the varicella virus which causes chickenpox.'
-			},
-			{
-				name: 'Chicken Pox + Nurse visit',
-				price: '£75.00',
-				duration: 'Two doses required',
-				doses: 2
-			},
-			{
-				name: 'Mantoux Test & Read (skin test)',
-				price: '£70.00',
-				duration: 'Test 1st day, Reading at 72 hrs'
-			},
-			{
-				name: 'Mantoux Test & Read + Nurse visit',
-				price: '£80.00',
-				duration: 'Test 1st day, Reading at 72 hrs'
-			},
-			{
-				name: 'BCG TB vaccines',
-				price: '£45.00',
-				duration: 'One dose',
-				doses: 1
-			},
-			{
-				name: 'BCG Scar verify',
-				price: '£35.00',
-				duration: 'One visit'
-			}
-		],
-		immune: [
-			{
-				name: 'Immune Booster (single)',
-				price: '£150.00',
-				duration: 'One session',
-				doses: 1,
-				details: 'Vitamin and mineral IV therapy to help boost your immune system.'
-			},
-			{
-				name: 'Immune Booster (5 sessions)',
-				price: '£650.00',
-				duration: 'Five sessions',
-				doses: 5
-			},
-			{
-				name: 'Vit C (10g) + glutathione (600mg)',
-				price: '£110.00',
-				duration: 'One session',
-				doses: 1,
-				details: 'High-dose vitamin C combined with glutathione for antioxidant support.'
-			},
-			{
-				name: 'Myers Cocktail',
-				price: '£170.00',
-				duration: 'One session',
-				doses: 1,
-				details:
-					'A nutrient cocktail given intravenously to help with various health conditions and improve energy.'
-			},
-			{
-				name: 'Glutathione 1200mg (alone)',
-				price: '£80.00',
-				duration: 'One session',
-				doses: 1
-			},
-			{
-				name: 'B12 Methylcobalamin 5mg / 1ml',
-				price: '£40.00',
-				duration: 'One injection',
-				doses: 1
-			}
-		],
-		occupational: [
-			{
-				name: 'Safety Critical Medical Assessment',
-				price: 'POA',
-				duration: 'One session',
-				details: 'Comprehensive medical assessment for safety-critical roles.'
-			},
-			{
-				name: 'HGV/LGV/PSV medical',
-				price: '£50.00',
-				duration: 'One session',
-				details:
-					'Medical assessment required for Heavy Goods Vehicle, Large Goods Vehicle, or Public Service Vehicle licenses.'
-			},
-			{
-				name: 'Pre-employment health questionnaire (paper-screen only)',
-				price: '£25.00',
-				duration: 'One assessment'
-			},
-			{
-				name: 'Pre-employment health questionnaire with follow up',
-				price: '£100.00',
-				duration: 'Assessment with telephone consult'
-			},
-			{
-				name: 'Preemployment (fitness for work) medical assessment',
-				price: '£140.00',
-				duration: 'One session'
-			},
-			{
-				name: 'Oil & Gas UK (OGUK) medical',
-				price: '£200.00',
-				duration: 'One session'
-			},
-			{
-				name: 'Oil & Gas UK (OGUK) medical plus ERT',
-				price: '£250.00',
-				duration: 'One session'
-			},
-			{
-				name: 'Oil & Gas UK (OGUK) medical plus Fit to train',
-				price: '£300.00',
-				duration: 'One session'
-			},
-			{
-				name: 'In water Fit to Train medicals',
-				price: '£120.00',
-				duration: 'One session'
-			},
-			{
-				name: 'Working at height medicals',
-				price: '£100.00',
-				duration: 'One session'
-			},
-			{
-				name: 'HSE diving medical',
-				price: '£150.00',
-				duration: 'One session'
-			},
-			{
-				name: 'Padi diving medical',
-				price: '£60.00',
-				duration: 'One session'
-			}
-		],
-		bloodtests: [
-			{
-				name: 'Full blood Count',
-				price: '£40.00',
-				duration: 'One test',
-				details:
-					'Measures several components of your blood including red and white blood cells, and platelets.'
-			},
-			{
-				name: 'Biochemistry plus liver function tests',
-				price: '£45.00',
-				duration: 'One test',
-				details:
-					'Comprehensive blood test assessing liver function and general biochemistry markers.'
-			},
-			{
-				name: 'Hepatitis B antibody (post immunisation)',
-				price: '£50.00',
-				duration: 'One test'
-			},
-			{
-				name: 'Hepatitis B core antibodies',
-				price: '£50.00',
-				duration: 'One test'
-			},
-			{
-				name: 'Hepatitis A antibodies',
-				price: '£45.00',
-				duration: 'One test'
-			},
-			{
-				name: 'Measles, Mumps, Rubella antibodies',
-				price: '£100.00',
-				duration: 'One test'
-			},
-			{
-				name: 'Chicken pox (Varicella) antibodies',
-				price: '£45.00',
-				duration: 'One test'
-			},
-			{
-				name: 'TB Quantiferon Gold',
-				price: '£70.00',
-				duration: 'One test'
-			},
-			{
-				name: 'Drug test 10 part',
-				price: '£45.00',
-				duration: 'One test'
-			},
-			{
-				name: 'Alcohol test',
-				price: '£25.00',
-				duration: 'One test'
-			}
-		],
-		consultation: [
-			{
-				name: '60 minutes Physician Consultation',
-				price: '£260.00',
-				duration: 'One consultation'
-			},
-			{
-				name: '30 minutes Physician Consultation',
-				price: '£120.00',
-				duration: 'One consultation'
-			},
-			{
-				name: '60 minutes Nutritional Consultation',
-				price: '£120.00',
-				duration: 'One consultation'
-			},
-			{
-				name: '30 minutes Nutritional Consultation',
-				price: '£60.00',
-				duration: 'One consultation'
-			},
-			{
-				name: '60 minutes Psychological counselling',
-				price: '£100.00',
-				duration: 'One consultation'
-			},
-			{
-				name: '30 minutes Psychological counselling',
-				price: '£60.00',
-				duration: 'One consultation'
-			}
-		],
-		diagnostic: [
-			{
-				name: 'Basic (Core Diagnostic test) FDx01',
-				price: '£175.00',
-				duration: 'One test'
-			},
-			{
-				name: 'Comprehensive (Maximum Diagnostic test) FDx02',
-				price: '£340.00',
-				duration: 'One test'
-			},
-			{
-				name: 'Vital (Diagnostic test) FDx03',
-				price: '£285.00',
-				duration: 'One test'
-			},
-			{
-				name: 'Thyroid (CoreDiagnostic test) FDx14',
-				price: '£200.00',
-				duration: 'One test'
-			},
-			{
-				name: 'Thyroid (VitalDiagnostic test) FDx15',
-				price: '£340.00',
-				duration: 'One test'
-			},
-			{
-				name: 'Female Health FDx18',
-				price: '£380.00',
-				duration: 'One test'
-			},
-			{
-				name: 'Male Health FDx19',
-				price: '£350.00',
-				duration: 'One test'
-			},
-			{
-				name: 'Vitamins FDx04',
-				price: '£70.00',
-				duration: 'One test'
-			}
-		]
-	};
-
-	const serviceCategories = [
-		{ id: 'all', label: 'All Services' },
-		{ id: 'vaccines', label: 'Vaccinations' },
-		{ id: 'immune', label: 'Immune Support' },
-		{ id: 'occupational', label: 'Occupational Health' },
-		{ id: 'bloodtests', label: 'Blood Tests' },
-		{ id: 'consultation', label: 'Consultations' },
-		{ id: 'diagnostic', label: 'Diagnostic Tests' }
-	];
-
-	function getCategoryLabel(categoryId) {
-		const categoryMap = {
-			vaccines: 'Vaccination',
-			immune: 'Immune Support',
-			occupational: 'Occupational Health',
-			bloodtests: 'Blood Test',
-			consultation: 'Consultation',
-			diagnostic: 'Diagnostic Test'
-		};
-		return categoryMap[categoryId] || '';
-	}
-
-	function getAllServices() {
-		return Object.keys(services).flatMap((category) =>
-			services[category].map((service) => ({
-				...service,
-				category
-			}))
-		);
-	}
+	import {
+		Check,
+		ExternalLink,
+		Phone,
+		ClipboardCheck,
+		Menu,
+		X,
+		Search,
+		ChevronRight,
+		Clock,
+		Syringe,
+		Calendar,
+		Mail,
+		MapPin,
+		User
+	} from 'lucide-svelte';
+	import { fade, fly, slide } from 'svelte/transition';
+	import {
+		services,
+		serviceCategories,
+		stats,
+		features,
+		team,
+		testimonials,
+		studies,
+		getCategoryLabel,
+		getAllServices
+	} from '$lib/data';
 
 	// --------------------------------------------------------------------------
 	// HEADER LOGIC
@@ -364,42 +40,6 @@
 	// FOOTER LOGIC
 	// --------------------------------------------------------------------------
 	const currentYear = new Date().getFullYear();
-
-	// --------------------------------------------------------------------------
-	// STATS DATA
-	// --------------------------------------------------------------------------
-	let stats = [
-		{ value: '15+', label: 'Years Experience' },
-		{ value: '500+', label: 'Corporate Clients' },
-		{ value: '25,000+', label: 'Vaccinations' },
-		{ value: '98%', label: 'Client Satisfaction' }
-	];
-
-	// --------------------------------------------------------------------------
-	// FEATURE DATA
-	// --------------------------------------------------------------------------
-	let features = [
-		{
-			title: 'Corporate Vaccinations',
-			description:
-				'Protect your workforce from preventable diseases with our comprehensive vaccination programs delivered at your workplace.'
-		},
-		{
-			title: 'Occupational Health Assessments',
-			description:
-				'Ensure your employees are fit for their roles with our detailed medical assessments tailored to your industry requirements.'
-		},
-		{
-			title: 'Mobile Clinic Services',
-			description:
-				'Our healthcare professionals can visit your workplace, minimizing disruption and maximizing convenience for your team.'
-		},
-		{
-			title: 'Industry-Specific Solutions',
-			description:
-				'Specialized services for oil & gas, transportation, healthcare, and other sectors with unique health and safety requirements.'
-		}
-	];
 
 	// --------------------------------------------------------------------------
 	// SERVICE SECTION & MODAL LOGIC
@@ -421,7 +61,6 @@
 	}
 
 	const allServicesList = getAllServices();
-
 	const filterBySearchQuery = (service) => {
 		const query = searchQuery.toLowerCase();
 		return (
@@ -445,60 +84,6 @@
 	);
 
 	// --------------------------------------------------------------------------
-	// ABOUT/TEAM DATA
-	// --------------------------------------------------------------------------
-	const team = [
-		{
-			name: 'Dr. Sarah Williams',
-			role: 'Medical Director',
-			bio: 'Dr. Williams has over 15 years of experience in occupational health and is a specialist in corporate wellness programs.',
-			color: colors.primaryLight
-		},
-		{
-			name: 'James Thompson',
-			role: 'Head of Occupational Health',
-			bio: 'James specializes in health surveillance and workplace assessments for high-risk industries including oil and gas.',
-			color: colors.primary
-		},
-		{
-			name: 'Dr. Michael Chen',
-			role: 'Vaccination Specialist',
-			bio: 'Dr. Chen leads our vaccination program and has extensive experience in travel medicine and immunology.',
-			color: colors.primaryDark
-		},
-		{
-			name: 'Emma Roberts',
-			role: 'Senior Nurse Practitioner',
-			bio: 'Emma has specialized in occupational health for 10 years and coordinates our on-site vaccination programs.',
-			color: colors.primaryLight
-		}
-	];
-
-	// --------------------------------------------------------------------------
-	// TESTIMONIAL DATA
-	// --------------------------------------------------------------------------
-	const testimonials = [
-		{
-			quote:
-				'Stemax Consultancy provided excellent occupational health services for our company. Their professional approach and attention to detail impressed us greatly.',
-			author: 'John Duningham',
-			position: 'HR Director, Global Logistics Ltd'
-		},
-		{
-			quote:
-				'The team at Stemax made our corporate health assessment process smooth and efficient. Their mobile vaccination service saved us countless work hours.',
-			author: 'Sarah Mitchell',
-			position: 'Operations Manager, Tech Innovations Inc'
-		},
-		{
-			quote:
-				"We've been using Stemax for all our offshore medical certifications for over 3 years. Their understanding of oil and gas requirements is exceptional.",
-			author: 'David Thompson',
-			position: 'Safety Officer, North Sea Operations'
-		}
-	];
-
-	// --------------------------------------------------------------------------
 	// CTA SECTION LOGIC
 	// --------------------------------------------------------------------------
 	let selectedService = $state('');
@@ -512,40 +97,6 @@
 		selectedService = event.target.value;
 		showPricing = !!event.target.value;
 	}
-
-	// --------------------------------------------------------------------------
-	// STUDIES DATA
-	// --------------------------------------------------------------------------
-	const studies = [
-		{
-			title: 'Chronic Obstructive Pulmonary Disease (COPD)',
-			status: 'Enrolling',
-			description:
-				'Clinical study for individuals aged 40-80 diagnosed with moderate to severe COPD and a history of smoking (10+ years).',
-			link: 'https://forms.office.com/Pages/ResponsePage.aspx?id=7SrJMp_Y9E-00dDZb8k73y_lJxBdoUtHiOhODDGZZjhUMTRYTlNTQVZGOVlYNDdQSkRSUDBITFlLTi4u&amp'
-		},
-		{
-			title: 'Lichen Simplex Chronicus (LSC)',
-			status: 'Enrolling',
-			description:
-				'Study for those experiencing moderate to severe skin itch affecting sleep despite 6+ months of medication.',
-			link: 'https://forms.office.com/e/HbGV7Na8cB?origin=lprLink'
-		},
-		{
-			title: 'Covid-19 Vaccine Booster',
-			status: 'Closed',
-			description:
-				'Clinical trial study for adults and children over 12 regarding vaccine boosters.',
-			link: null
-		},
-		{
-			title: 'Obsessive Compulsive Disorder (OCD)',
-			status: 'Closed',
-			description:
-				'Study for individuals aged 18-65 diagnosed with OCD for at least one year with inadequate relief from current treatments.',
-			link: null
-		}
-	];
 </script>
 
 <svelte:head>
@@ -555,14 +106,11 @@
 		name="description"
 		content="Professional occupational health services including vaccinations, medical assessments, and health surveillance for businesses across the UK. Based in Milton Keynes."
 	/>
-
 	<meta
 		name="keywords"
 		content="occupational health, corporate vaccinations, health assessments, medical services, OGUK medical, HGV medical, Milton Keynes"
 	/>
-
 	<link rel="canonical" href="https://www.stemaxmedical.co.uk" />
-
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://www.stemaxmedical.co.uk" />
 	<meta
@@ -574,7 +122,6 @@
 		content="Comprehensive healthcare solutions for businesses including vaccinations, occupational health assessments, and mobile services."
 	/>
 	<meta property="og:image" content="https://www.stemaxmedical.co.uk/favicon.png" />
-
 	<meta property="twitter:card" content="summary_large_image" />
 	<meta property="twitter:url" content="https://www.stemaxmedical.co.uk" />
 	<meta
@@ -586,17 +133,11 @@
 		content="Comprehensive healthcare solutions for businesses including vaccinations, occupational health assessments, and mobile clinic services."
 	/>
 	<meta property="twitter:image" content="https://www.stemaxmedical.co.uk/twitter-image.jpg" />
-
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 	<link rel="manifest" href="/site.webmanifest" />
-
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
 	<meta name="theme-color" content="#047857" />
-
 	<meta name="author" content="Stemax Consult Healthcare Services Ltd" />
 	<meta name="robots" content="index, follow" />
 	<meta name="google" content="notranslate" />
@@ -636,95 +177,52 @@
 </svelte:head>
 
 <header
-	class="sticky top-0 z-50 border-b border-gray-200 bg-white"
-	style="border-color: {colors.primaryLight}"
+	class="sticky top-0 z-50 border-b border-gray-100 bg-white/90 backdrop-blur-md transition-all duration-200 supports-backdrop-blur:bg-white/95"
 >
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<div class="flex h-16 items-center justify-between">
-			<div class="flex items-center">
-				<div class="text-2xl font-bold" style="color: {colors.primary}">
-					STEMAX
-					<span class="ml-2 text-sm font-normal" style="color: {colors.textLight}"
+		<div class="flex h-20 items-center justify-between">
+			<div class="flex shrink-0 items-center gap-3">
+				<div
+					class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 text-white shadow-lg"
+				>
+					<span class="text-xl font-bold">S</span>
+				</div>
+				<div class="flex flex-col">
+					<span class="text-xl font-bold tracking-tight text-slate-900">STEMAX</span>
+					<span class="text-xs font-medium tracking-wide text-slate-500 uppercase"
 						>Healthcare Consultancy</span
 					>
 				</div>
 			</div>
 
-			<nav class="hidden items-center justify-end space-x-10 md:flex">
+			<nav class="hidden space-x-1 md:flex">
+				{#each ['Services', 'Clinical Trials', 'About', 'Testimonials'] as item}
+					<a
+						href="#{item.toLowerCase().replace(' ', '-')}"
+						class="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-emerald-50 hover:text-emerald-700"
+					>
+						{item}
+					</a>
+				{/each}
 				<a
-					href="#services"
-					class="text-base font-medium hover:text-emerald-700"
-					style="color: {colors.text}"
+					href="#book"
+					class="ml-4 rounded-lg bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-emerald-800 hover:shadow-md active:translate-y-0.5"
 				>
-					Services
-				</a>
-				<a
-					href="#clinical-trials"
-					class="text-base font-medium hover:text-emerald-700"
-					style="color: {colors.text}"
-				>
-					Clinical Trials
-				</a>
-				<a
-					href="#about"
-					class="text-base font-medium hover:text-emerald-700"
-					style="color: {colors.text}"
-				>
-					About Us
-				</a>
-				<a
-					href="#testimonials"
-					class="text-base font-medium hover:text-emerald-700"
-					style="color: {colors.text}"
-				>
-					Testimonials
-				</a>
-				<a
-					href="#contact"
-					class="text-base font-medium hover:text-emerald-700"
-					style="color: {colors.text}"
-				>
-					Contact
+					Book Now
 				</a>
 			</nav>
 
 			<div class="flex md:hidden">
 				<button
 					type="button"
-					class="inline-flex items-center justify-center p-2"
-					style="color: {colors.primary}"
+					class="inline-flex items-center justify-center rounded-md p-2 text-slate-600 hover:bg-slate-100 focus:outline-none"
 					onclick={toggleMobileMenu}
+					aria-label="Main menu"
 				>
 					{#if mobileMenuOpen}
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="h-6 w-6"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M6 18L18 6M6 6l12 12"
-							/>
-						</svg>
+						<X class="h-6 w-6" />
 					{:else}
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="h-6 w-6"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M4 6h16M4 12h16M4 18h16"
-							/>
-						</svg>
+						<Menu class="h-6 w-6" />
 					{/if}
 				</button>
 			</div>
@@ -732,1016 +230,381 @@
 	</div>
 
 	{#if mobileMenuOpen}
-		<div class="md:hidden">
-			<div class="space-y-1 bg-white pt-2 pb-4">
-				<a
-					href="#services"
-					class="block border-l-4 px-4 py-2 text-base font-medium"
-					style="border-color: {colors.primary}; background-color: #f3f4f6"
-					onclick={toggleMobileMenu}
-				>
-					Services
-				</a>
-				<a
-					href="#clinical-trials"
-					class="block border-l-4 border-transparent px-4 py-2 text-base font-medium hover:bg-gray-50"
-					onclick={toggleMobileMenu}
-				>
-					Clinical Trials
-				</a>
-				<a
-					href="#about"
-					class="block border-l-4 border-transparent px-4 py-2 text-base font-medium"
-					onclick={toggleMobileMenu}
-				>
-					About Us
-				</a>
-				<a
-					href="#testimonials"
-					class="block border-l-4 border-transparent px-4 py-2 text-base font-medium"
-					onclick={toggleMobileMenu}
-				>
-					Testimonials
-				</a>
-				<a
-					href="#contact"
-					class="block border-l-4 border-transparent px-4 py-2 text-base font-medium"
-					onclick={toggleMobileMenu}
-				>
-					Contact
-				</a>
+		<div transition:slide class="border-b border-gray-200 bg-white md:hidden" id="mobile-menu">
+			<div class="space-y-1 px-4 py-6">
+				{#each ['Services', 'Clinical Trials', 'About', 'Testimonials', 'Contact'] as item}
+					<a
+						href="#{item.toLowerCase().replace(' ', '-')}"
+						class="block rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-700"
+						onclick={toggleMobileMenu}
+					>
+						{item}
+					</a>
+				{/each}
 				<a
 					href="#book"
-					class="block px-4 py-2 text-base font-medium"
-					style="background-color: {colors.primary}; color: {colors.light}"
+					class="mt-4 block w-full rounded-lg bg-emerald-700 px-3 py-3 text-center text-base font-medium text-white shadow-sm hover:bg-emerald-800"
 					onclick={toggleMobileMenu}
 				>
-					Book Appointment
+					Book an Appointment
 				</a>
 			</div>
 		</div>
 	{/if}
 </header>
 
-<div style="display: contents">
-	<div class="relative overflow-hidden" style="background-color: {colors.background}">
-		<div class="mx-auto max-w-7xl">
-			<div class="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:pb-28 xl:p-32">
-				<main class="mx-auto mt-10 max-w-7xl px-4 sm:mt-12 sm:px-6 lg:mt-16 lg:px-8">
-					<div class="sm:text-center lg:text-left">
-						<h1 class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-							<span class="block" style="color: {colors.secondary}">Professional Healthcare</span>
-							<span class="block" style="color: {colors.primary}">Solutions for Your Business</span>
-						</h1>
-						<p
-							class="mt-3 text-base sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg md:mt-5 md:text-xl lg:mx-0"
-							style="color: {colors.textLight}"
+<main>
+	<section class="relative overflow-hidden bg-slate-50 pt-16 pb-20 lg:pt-32 lg:pb-28">
+		<div class="absolute inset-0 z-0 opacity-40">
+			<div
+				class="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-emerald-200/50 blur-3xl filter"
+			></div>
+			<div
+				class="absolute top-1/2 right-0 h-96 w-96 -translate-y-1/2 rounded-full bg-blue-100/50 blur-3xl filter"
+			></div>
+		</div>
+
+		<div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<div class="text-center lg:grid lg:grid-cols-2 lg:items-center lg:gap-16 lg:text-left">
+				<div>
+					<div
+						class="mb-6 inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700 ring-1 ring-emerald-600/20 ring-inset"
+					>
+						<span class="mr-2 h-1.5 w-1.5 rounded-full bg-emerald-600"></span>
+						Trusted Healthcare Partner since 2007
+					</div>
+					<h1 class="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+						<span class="block">Professional Healthcare</span>
+						<span
+							class="block bg-gradient-to-r from-emerald-700 to-teal-600 bg-clip-text text-emerald-700 text-transparent"
+							>Solutions for Business</span
 						>
-							Stemax Consultancy offers comprehensive occupational health services, including
-							medical assessments, vaccinations, and health surveillance programs tailored to your
-							company's needs.
-						</p>
-						<div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-							<div class="sm:flex">
-								<a
-									href="#book"
-									class="flex items-center justify-center px-8 py-3 text-base font-medium text-white md:px-10 md:py-4 md:text-lg"
-									style="background-color: {colors.primary}"
-								>
-									Book a Service
-								</a>
-								<a
-									href="#services"
-									class="mt-3 flex items-center justify-center border px-8 py-3 text-base font-medium sm:mt-0 sm:ml-3 md:px-10 md:py-4 md:text-lg"
-									style="border-color: {colors.primary}; color: {colors.primary}"
-								>
-									Explore Services
-								</a>
+					</h1>
+					<p class="mx-auto mt-6 max-w-2xl text-lg text-slate-600 lg:mx-0">
+						Stemax Consultancy offers comprehensive occupational health services, including medical
+						assessments, vaccinations, and health surveillance programs tailored to your company's
+						needs.
+					</p>
+					<div class="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
+						<a
+							href="#book"
+							class="inline-flex items-center justify-center rounded-xl bg-emerald-700 px-8 py-4 text-base font-semibold text-white shadow-lg transition-all hover:-translate-y-1 hover:bg-emerald-800 hover:shadow-emerald-900/20"
+						>
+							Book a Service
+						</a>
+						<a
+							href="#services"
+							class="inline-flex items-center justify-center rounded-xl bg-white px-8 py-4 text-base font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 transition-all hover:bg-slate-50 hover:text-emerald-700"
+						>
+							Explore Services
+						</a>
+					</div>
+
+					<div class="mt-12 hidden grid-cols-3 gap-8 border-t border-slate-200/60 pt-8 lg:grid">
+						{#each stats.slice(0, 3) as stat}
+							<div>
+								<p class="text-3xl font-bold text-slate-900">{stat.value}</p>
+								<p class="text-sm text-slate-500">{stat.label}</p>
+							</div>
+						{/each}
+					</div>
+				</div>
+
+				<div class="relative mt-16 hidden lg:mt-0 lg:block">
+					<div
+						class="relative mx-auto w-full rounded-2xl bg-white p-8 shadow-2xl ring-1 ring-slate-900/5"
+					>
+						<div class="mb-8 flex items-center justify-between">
+							<div class="h-3 w-20 rounded-full bg-slate-200"></div>
+							<div
+								class="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-600"
+							>
+								<User size={16} />
+							</div>
+						</div>
+						<div class="space-y-4">
+							<div
+								class="flex h-24 w-full gap-4 rounded-xl border border-slate-100 bg-slate-50 p-4"
+							>
+								<div class="h-12 w-12 shrink-0 rounded-lg bg-emerald-100"></div>
+								<div class="w-full space-y-2">
+									<div class="h-4 w-2/3 rounded bg-slate-200"></div>
+									<div class="h-3 w-1/2 rounded bg-slate-100"></div>
+								</div>
+							</div>
+							<div
+								class="flex h-24 w-full gap-4 rounded-xl border border-slate-100 bg-slate-50 p-4"
+							>
+								<div class="h-12 w-12 shrink-0 rounded-lg bg-blue-100"></div>
+								<div class="w-full space-y-2">
+									<div class="h-4 w-3/4 rounded bg-slate-200"></div>
+									<div class="h-3 w-1/3 rounded bg-slate-100"></div>
+								</div>
+							</div>
+							<div
+								class="flex h-24 w-full gap-4 rounded-xl border border-slate-100 bg-slate-50 p-4"
+							>
+								<div class="h-12 w-12 shrink-0 rounded-lg bg-orange-100"></div>
+								<div class="w-full space-y-2">
+									<div class="h-4 w-1/2 rounded bg-slate-200"></div>
+									<div class="h-3 w-2/3 rounded bg-slate-100"></div>
+								</div>
+							</div>
+						</div>
+						<div
+							class="absolute -right-6 -bottom-6 rounded-xl bg-slate-900 p-4 text-white shadow-xl"
+						>
+							<div class="flex items-center gap-3">
+								<div class="flex -space-x-2">
+									<div class="h-8 w-8 rounded-full bg-slate-700 ring-2 ring-slate-900"></div>
+									<div class="h-8 w-8 rounded-full bg-slate-600 ring-2 ring-slate-900"></div>
+									<div class="h-8 w-8 rounded-full bg-slate-500 ring-2 ring-slate-900"></div>
+								</div>
+								<div class="text-xs font-medium">
+									<span class="block text-emerald-400">500+</span>
+									Corporate Clients
+								</div>
 							</div>
 						</div>
 					</div>
-				</main>
+				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 
-	<section class="border-t border-b border-gray-200 py-12 md:py-20">
+	<section class="bg-white py-20 lg:py-28">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<div class="grid grid-cols-1 gap-8 text-center md:grid-cols-4">
-				{#each stats as stat (stat.label)}
-					<div>
-						<p class="text-4xl font-bold" style:color={colors.primary}>{stat.value}</p>
-						<p class="mt-2 text-lg" style:color={colors.textLight}>{stat.label}</p>
+			<div class="mx-auto mb-16 max-w-3xl text-center">
+				<h2 class="text-base leading-7 font-semibold tracking-wide text-emerald-600 uppercase">
+					Why Choose Stemax
+				</h2>
+				<p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+					Excellence in Occupational Health
+				</p>
+				<p class="mt-6 text-lg leading-8 text-slate-600">
+					We deliver professional healthcare services with efficiency, expertise, and a commitment
+					to your workforce's wellbeing.
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+				{#each features as feature}
+					<div
+						class="group relative rounded-2xl border border-slate-200 bg-white p-8 transition-all hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl"
+					>
+						<div
+							class="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 transition-colors group-hover:bg-emerald-600 group-hover:text-white"
+						>
+							<Check class="h-7 w-7" />
+						</div>
+						<h3
+							class="text-xl font-bold text-slate-900 transition-colors group-hover:text-emerald-700"
+						>
+							{feature.title}
+						</h3>
+						<p class="mt-4 text-base leading-relaxed text-slate-600">
+							{feature.description}
+						</p>
 					</div>
 				{/each}
 			</div>
 		</div>
 	</section>
 
-	<section class="py-12 md:py-20" style:background-color={colors.background}>
+	<section id="services" class="bg-slate-50 py-20 lg:py-32">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<div class="mb-12 lg:text-center">
-				<h2 class="text-base font-semibold tracking-wide uppercase" style:color={colors.primary}>
-					Features
+			<div class="mx-auto mb-12 max-w-3xl text-center">
+				<h2 class="text-base leading-7 font-semibold tracking-wide text-emerald-600 uppercase">
+					Our Services
 				</h2>
-				<p
-					class="mt-2 text-3xl leading-8 font-bold tracking-tight sm:text-4xl"
-					style:color={colors.secondary}
-				>
-					Why Choose Stemax
-				</p>
-				<p class="mt-4 max-w-2xl text-xl lg:mx-auto" style:color={colors.textLight}>
-					We deliver professional healthcare services with efficiency, expertise, and excellence.
+				<p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+					Comprehensive Healthcare Solutions
 				</p>
 			</div>
 
-			<div class="mt-10">
-				<div class="md:grid md:grid-cols-2 md:gap-8">
-					{#each features as feature (feature.title)}
-						<div class="mt-4 flex border border-gray-200 p-6 md:mt-0">
-							<div class="shrink-0">
-								<div
-									class="flex h-12 w-12 items-center justify-center text-white"
-									style:background-color={colors.primary}
+			<div class="flex flex-col gap-8">
+				<div class="relative mx-auto w-full max-w-lg">
+					<div
+						class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"
+					>
+						<Search class="h-5 w-5" />
+					</div>
+					<input
+						type="text"
+						placeholder="Search services (e.g., 'Vaccine', 'HGV', 'Blood test')..."
+						bind:value={searchQuery}
+						class="block w-full rounded-full border-0 py-3.5 pr-4 pl-11 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600 focus:ring-inset sm:text-sm sm:leading-6"
+					/>
+				</div>
+
+				<div class="flex flex-wrap justify-center gap-2">
+					{#each serviceCategories as category}
+						<button
+							onclick={() => (activeTab = category.id)}
+							class="rounded-full px-5 py-2 text-sm font-medium transition-all duration-200 {activeTab ===
+							category.id
+								? 'bg-emerald-700 text-white shadow-md'
+								: 'bg-white text-slate-600 shadow-sm ring-1 ring-slate-200 hover:bg-emerald-50 hover:text-emerald-700'}"
+						>
+							{category.label}
+							{#if category.id === 'all'}
+								<span
+									class="ml-2 inline-flex items-center justify-center rounded-full bg-white/20 px-2 py-0.5 text-xs font-semibold"
 								>
-									<Check class="h-6 w-6" />
-								</div>
-							</div>
-							<div class="ml-4">
-								<h3 class="text-lg font-medium" style:color={colors.text}>
-									{feature.title}
-								</h3>
-								<p class="mt-2" style:color={colors.textLight}>{feature.description}</p>
-							</div>
-						</div>
+									{allServicesList.length}
+								</span>
+							{:else if services[category.id]}
+								<span
+									class="ml-2 inline-flex items-center justify-center rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600"
+									class:text-white={activeTab === category.id}
+									class:bg-emerald-600={activeTab === category.id}
+								>
+									{services[category.id].length}
+								</span>
+							{/if}
+						</button>
 					{/each}
 				</div>
 			</div>
-		</div>
-	</section>
 
-	<section id="services" class="py-12 md:py-20">
-		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<div class="mb-12 lg:text-center">
-				<h2 class="text-base font-semibold tracking-wide uppercase" style:color={colors.primary}>
-					Our Services
-				</h2>
-				<p
-					class="mt-2 text-3xl leading-8 font-bold tracking-tight sm:text-4xl"
-					style:color={colors.secondary}
-				>
-					Comprehensive Healthcare Solutions
-				</p>
-				<p class="mt-4 max-w-2xl text-xl lg:mx-auto" style:color={colors.textLight}>
-					We offer a wide range of healthcare services to meet the needs of your business and
-					employees.
-				</p>
-			</div>
-
-			<div class="mt-12">
-				<div class="mx-auto mb-8 max-w-md">
-					<div class="relative">
-						<input
-							type="text"
-							placeholder="Search services..."
-							bind:value={searchQuery}
-							class="w-full border border-gray-300 px-4 py-2 focus:border-emerald-500 focus:outline-none"
-							style:border-color={colors.primary}
-						/>
-						<button
-							aria-label="button"
-							class="absolute top-0 right-0 flex h-full items-center justify-center px-4"
-							style:color={colors.primary}
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class="h-5 w-5"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-								/>
-							</svg>
-						</button>
-					</div>
-				</div>
-
-				<div class="border-b border-gray-200">
-					<div class="flex overflow-x-auto md:justify-center">
-						{#each serviceCategories as category (category.id)}
-							<button
-								onclick={() => (activeTab = category.id)}
-								class="relative mt-2 flex-shrink-0 border-b-2 px-3 py-4 text-center text-sm font-medium sm:w-auto sm:px-6"
-								class:border-emerald-700={activeTab === category.id}
-								class:border-transparent={activeTab !== category.id}
-								class:text-emerald-700={activeTab === category.id}
-								class:text-gray-500={activeTab !== category.id}
-								class:hover:text-gray-700={activeTab !== category.id}
-								class:hover:border-gray-300={activeTab !== category.id}
-								style="border-color: {activeTab === category.id
-									? colors.primary
-									: 'transparent'}; color: {activeTab === category.id
-									? colors.primary
-									: colors.textLight}"
-							>
-								{#if category.id === 'all'}
-									<span
-										class="absolute -top-2 left-1/2 flex h-5 w-auto -translate-x-1/2 transform items-center justify-center rounded-full bg-emerald-700 px-1.5 text-xs text-white"
-										style:background-color={colors.primary}
-									>
-										{allServicesList.length}
-									</span>
-								{:else if services[category.id]}
-									<span
-										class="absolute -top-2 left-1/2 flex h-5 w-auto -translate-x-1/2 transform items-center justify-center rounded-full bg-emerald-700 px-1.5 text-xs text-white"
-										style:background-color={activeTab === category.id
-											? colors.primary
-											: colors.textLight}
-									>
-										{services[category.id].length}
-									</span>
-								{/if}
-								{category.label}
-							</button>
-						{/each}
-					</div>
-				</div>
-
+			<div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-8">
 				{#if filteredServices.length === 0}
-					<div class="mt-8 border border-gray-200 py-12 text-center">
-						<p class="text-lg" style:color={colors.textLight}>
-							No services found matching your search criteria.
-						</p>
+					<div class="col-span-full py-16 text-center">
+						<div
+							class="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-slate-100"
+						>
+							<Search class="h-8 w-8 text-slate-400" />
+						</div>
+						<h3 class="text-lg font-medium text-slate-900">No services found</h3>
+						<p class="mt-1 text-slate-500">Try adjusting your search terms or filter category.</p>
 						<button
 							onclick={() => (searchQuery = '')}
-							class="mt-4 px-4 py-2 text-white"
-							style:background-color={colors.primary}
+							class="mt-6 font-medium text-emerald-600 hover:text-emerald-500"
 						>
 							Clear Search
 						</button>
 					</div>
 				{:else}
-					<div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-						{#each displayedServices as service (service.name)}
-							<div
-								class="flex h-full flex-col border border-gray-200 shadow-sm"
-								style:background-color={colors.light}
-							>
-								<div class="flex-grow p-6">
-									<div class="flex items-start justify-between">
-										<div>
-											<div class="mb-2 flex items-center gap-2">
-												<h3 class="text-lg font-semibold" style:color={colors.text}>
-													{service.name}
-												</h3>
-											</div>
-											{#if service.category}
-												<p class="mb-2 text-xs" style:color={colors.textLight}>
-													{getCategoryLabel(service.category)}
-												</p>
-											{/if}
-											<p class="text-xl font-bold" style:color={colors.primary}>
-												{service.price}
-											</p>
-										</div>
-									</div>
-
-									<div class="mt-2 flex items-center gap-2 text-sm" style:color={colors.textLight}>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											class="h-4 w-4"
-											width="24"
-											height="24"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											stroke-width="2"
-											stroke-linecap="round"
-											stroke-linejoin="round"
+					{#each displayedServices as service (service.name)}
+						<div
+							transition:fade={{ duration: 200 }}
+							class="flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all hover:-translate-y-1 hover:shadow-lg"
+						>
+							<div class="flex h-full flex-col p-6">
+								<div class="mb-4">
+									{#if service.category}
+										<span
+											class="mb-2 inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 ring-1 ring-emerald-600/20 ring-inset"
 										>
-											<circle cx="12" cy="12" r="10"></circle>
-											<polyline points="12 6 12 12 16 14"></polyline>
-										</svg>
+											{getCategoryLabel(service.category)}
+										</span>
+									{/if}
+									<h3 class="mt-2 line-clamp-2 min-h-[3.5rem] text-lg font-bold text-slate-900">
+										{service.name}
+									</h3>
+									<p class="mt-2 text-2xl font-bold tracking-tight text-emerald-700">
+										{service.price}
+									</p>
+								</div>
+
+								<div class="mb-6 flex-grow space-y-3">
+									<div class="flex items-center gap-3 text-sm text-slate-600">
+										<Clock class="h-4 w-4 shrink-0 text-emerald-500" />
 										<span>{service.duration}</span>
 									</div>
-
+									{#if service.doses}
+										<div class="flex items-center gap-3 text-sm text-slate-600">
+											<Syringe class="h-4 w-4 shrink-0 text-emerald-500" />
+											<span>{service.doses} {service.doses === 1 ? 'dose' : 'doses'} required</span>
+										</div>
+									{/if}
 									{#if service.details}
-										<p class="mt-3 text-sm" style:color={colors.text}>
+										<p class="mt-4 line-clamp-3 text-sm leading-relaxed text-slate-500">
 											{service.details}
 										</p>
 									{/if}
-
-									{#if service.doses}
-										<div class="mt-4 flex items-center gap-2">
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												class="h-4 w-4"
-												width="24"
-												height="24"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="currentColor"
-												stroke-width="2"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												style:color={colors.primary}
-											>
-												<polyline points="20 6 9 17 4 12"></polyline>
-											</svg>
-											<span class="text-sm"
-												>{service.doses}
-												{service.doses === 1 ? 'dose' : 'doses'} required</span
-											>
-										</div>
-									{/if}
 								</div>
 
-								<div class="mt-auto border-t border-gray-200 px-6 py-4">
-									<button
-										onclick={() => openServiceModal(service)}
-										class="flex w-full items-center justify-center border border-transparent px-4 py-2 text-sm font-medium text-white"
-										style:background-color={colors.primary}
-									>
-										Book Appointment
-									</button>
-								</div>
+								<button
+									onclick={() => openServiceModal(service)}
+									class="mt-auto flex w-full items-center justify-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
+								>
+									Book Appointment
+								</button>
 							</div>
-						{/each}
+						</div>
+					{/each}
 
-						{#if activeTab === 'all' && !showAllServices && !searchQuery && filteredServices.length > 10}
-							<button
-								class="flex h-full cursor-pointer flex-col items-center justify-center border border-dashed border-gray-200 p-6"
-								onclick={() => (showAllServices = true)}
-								style="background-color: rgba(4, 120, 87, 0.05)"
+					{#if activeTab === 'all' && !showAllServices && !searchQuery && filteredServices.length > 10}
+						<button
+							class="group flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-emerald-200 bg-emerald-50/50 p-8 text-center transition-all hover:border-emerald-300 hover:bg-emerald-50"
+							onclick={() => (showAllServices = true)}
+						>
+							<div
+								class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 group-hover:bg-emerald-200"
 							>
-								<div class="text-center">
-									<p class="mb-2 text-lg font-medium" style:color={colors.primary}>
-										View All Services
-									</p>
-									<p class="mb-4 text-sm text-gray-500">
-										{filteredServices.length - 10} more services available
-									</p>
-									<div
-										class="inline-flex h-10 w-10 items-center justify-center rounded-full"
-										style:background-color={colors.primary}
-									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											class="h-6 w-6 text-white"
-											fill="none"
-											viewBox="0 0 24 24"
-											stroke="currentColor"
-										>
-											<path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												stroke-width="2"
-												d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-											/>
-										</svg>
-									</div>
-								</div>
-							</button>
-						{/if}
-					</div>
+								<ChevronRight class="h-6 w-6" />
+							</div>
+							<p class="text-lg font-semibold text-emerald-900">View All Services</p>
+							<p class="text-sm text-emerald-600/80">
+								{filteredServices.length - 10} more available
+							</p>
+						</button>
+					{/if}
 				{/if}
-
-				<div class="mt-10 text-center">
-					<a
-						href="#book"
-						class="inline-flex items-center justify-center border border-transparent px-8 py-3 text-base font-medium text-white"
-						style:background-color={colors.primary}
-					>
-						Book a Service
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="ml-2 h-5 w-5"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						>
-							<line x1="5" y1="12" x2="19" y2="12"></line>
-							<polyline points="12 5 19 12 12 19"></polyline>
-						</svg>
-					</a>
-				</div>
-			</div>
-		</div>
-
-		{#if modalOpen && selectedServiceDetails}
-			<div
-				class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
-			>
-				<div
-					class="max-h-[90vh] w-full max-w-2xl overflow-y-auto bg-white shadow-xl"
-					style:border-color={colors.primary}
-				>
-					<div
-						class="flex items-center justify-between border-b px-6 py-4"
-						style:border-color={colors.primary}
-					>
-						<h3 class="text-xl font-bold" style:color={colors.primary}>
-							{selectedServiceDetails.name}
-						</h3>
-						<button
-							aria-label="close"
-							onclick={closeModal}
-							class="text-gray-500 hover:text-gray-700"
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class="h-6 w-6"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M6 18L18 6M6 6l12 12"
-								/>
-							</svg>
-						</button>
-					</div>
-
-					<div class="px-6 py-4">
-						<div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-							<div>
-								<p class="mb-1 text-sm text-gray-500">Category</p>
-								{#if selectedServiceDetails.category}
-									<p class="font-medium">
-										{getCategoryLabel(selectedServiceDetails.category)}
-									</p>
-								{:else}
-									<p class="font-medium">{getCategoryLabel(activeTab)}</p>
-								{/if}
-							</div>
-
-							<div>
-								<p class="mb-1 text-sm text-gray-500">Price</p>
-								<p class="text-xl font-bold" style:color={colors.primary}>
-									{selectedServiceDetails.price}
-								</p>
-							</div>
-
-							<div>
-								<p class="mb-1 text-sm text-gray-500">Duration</p>
-								<p class="font-medium">{selectedServiceDetails.duration}</p>
-							</div>
-
-							{#if selectedServiceDetails.doses}
-								<div>
-									<p class="mb-1 text-sm text-gray-500">Required Doses</p>
-									<p class="font-medium">
-										{selectedServiceDetails.doses}
-										{selectedServiceDetails.doses === 1 ? 'dose' : 'doses'}
-									</p>
-								</div>
-							{/if}
-
-							{#if selectedServiceDetails.booster}
-								<div>
-									<p class="mb-1 text-sm text-gray-500">Booster</p>
-									<p class="font-medium">{selectedServiceDetails.booster}</p>
-								</div>
-							{/if}
-						</div>
-
-						{#if selectedServiceDetails.details}
-							<div class="mb-6">
-								<p class="mb-1 text-sm text-gray-500">Description</p>
-								<p>{selectedServiceDetails.details}</p>
-							</div>
-						{/if}
-
-						<div>
-							<h4 class="mb-4 text-lg font-medium">Book this service</h4>
-							<form class="grid grid-cols-1 gap-4 md:grid-cols-2">
-								<div class="md:col-span-2">
-									<label class="mb-1 block text-sm font-medium text-gray-700" for="name">
-										Full Name
-									</label>
-									<input
-										type="text"
-										id="name"
-										class="w-full border border-gray-300 px-3 py-2"
-										placeholder="John Smith"
-									/>
-								</div>
-
-								<div>
-									<label class="mb-1 block text-sm font-medium text-gray-700" for="email">
-										Email
-									</label>
-									<input
-										type="email"
-										id="email"
-										class="w-full border border-gray-300 px-3 py-2"
-										placeholder="john@example.com"
-									/>
-								</div>
-
-								<div>
-									<label class="mb-1 block text-sm font-medium text-gray-700" for="phone">
-										Phone
-									</label>
-									<input
-										type="tel"
-										id="phone"
-										class="w-full border border-gray-300 px-3 py-2"
-										placeholder="+44 123 456 7890"
-									/>
-								</div>
-
-								<div>
-									<label class="mb-1 block text-sm font-medium text-gray-700" for="date">
-										Preferred Date
-									</label>
-									<input type="date" id="date" class="w-full border border-gray-300 px-3 py-2" />
-								</div>
-
-								<div>
-									<label class="mb-1 block text-sm font-medium text-gray-700" for="time">
-										Preferred Time
-									</label>
-									<input type="time" id="time" class="w-full border border-gray-300 px-3 py-2" />
-								</div>
-
-								<div class="md:col-span-2">
-									<label class="mb-1 block text-sm font-medium text-gray-700" for="notes">
-										Additional Notes
-									</label>
-									<textarea
-										id="notes"
-										rows="3"
-										class="w-full border border-gray-300 px-3 py-2"
-										placeholder="Any specific requirements or questions"
-									></textarea>
-								</div>
-							</form>
-						</div>
-					</div>
-
-					<div
-						class="flex justify-end gap-3 border-t px-6 py-4"
-						style:border-color={colors.primary}
-					>
-						<button
-							onclick={closeModal}
-							class=" border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50"
-						>
-							Cancel
-						</button>
-						<button class=" px-4 py-2 text-white" style:background-color={colors.primary}>
-							Confirm Booking
-						</button>
-					</div>
-				</div>
-			</div>
-		{/if}
-	</section>
-
-	<section id="about" class="py-12 md:py-20" style:background-color={colors.background}>
-		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<div class="mb-12 lg:text-center">
-				<h2 class="text-base font-semibold tracking-wide uppercase" style:color={colors.primary}>
-					About Us
-				</h2>
-				<p
-					class="mt-2 text-3xl leading-8 font-bold tracking-tight sm:text-4xl"
-					style:color={colors.secondary}
-				>
-					Meet Our Team
-				</p>
-				<p class="mt-4 max-w-2xl text-xl lg:mx-auto" style:color={colors.textLight}>
-					Our experienced healthcare professionals have been providing exceptional services to
-					businesses across the UK since 2007.
-				</p>
 			</div>
 
-			<div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-				{#each team as member}
-					<div class="flex flex-col items-center bg-white p-6 text-center shadow-lg">
-						<div class="relative mb-4 h-32 w-32">
-							<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-								<circle cx="50" cy="50" r="50" fill={member.color}></circle>
-
-								<text
-									x="50"
-									y="58"
-									font-family="Arial"
-									font-size="24"
-									font-weight="bold"
-									text-anchor="middle"
-									fill="white"
-								>
-									{member.name
-										.split(' ')
-										.map((n) => n[0])
-										.join('')}
-								</text>
-							</svg>
-						</div>
-
-						<h3 class="mb-1 text-lg font-bold" style:color={colors.secondary}>
-							{member.name}
-						</h3>
-						<p class="mb-3 text-sm font-medium" style:color={colors.primary}>
-							{member.role}
-						</p>
-						<p class="text-sm" style:color={colors.textLight}>{member.bio}</p>
-
-						<div class="mt-4 w-full border-t border-gray-100 pt-4">
-							<a
-								href="#contact"
-								class="inline-flex items-center text-sm font-medium"
-								style:color={colors.primary}
-							>
-								Contact
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									class="ml-1 h-4 w-4"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M9 5l7 7-7 7"
-									></path>
-								</svg>
-							</a>
-						</div>
-					</div>
-				{/each}
-			</div>
-		</div>
-	</section>
-
-	<section id="testimonials" class="py-12 md:py-20" style:background-color={colors.primary}>
-		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<div class="mb-12 lg:text-center">
-				<h2 class="text-base font-semibold tracking-wide text-white uppercase">Testimonials</h2>
-				<p class="mt-2 text-3xl leading-8 font-bold tracking-tight text-white sm:text-4xl">
-					What Our Clients Say
-				</p>
-			</div>
-
-			<div class="mt-10 grid gap-8 md:grid-cols-3">
-				{#each testimonials as testimonial (testimonial.author)}
-					<div
-						class="border p-6"
-						style="border-color: {colors.primaryLight}; background-color: rgba(255, 255, 255, 0.1);"
-					>
-						<p class="mb-4 text-white">"{testimonial.quote}"</p>
-						<div>
-							<p class="font-semibold text-white">{testimonial.author}</p>
-							<p class="text-emerald-200">{testimonial.position}</p>
-						</div>
-					</div>
-				{/each}
-			</div>
-		</div>
-	</section>
-
-	<section id="book" class="py-12 md:py-20" style:background-color={colors.background}>
-		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<div class="lg:text-center">
-				<h2 class="text-base font-semibold tracking-wide uppercase" style:color={colors.primary}>
-					Get Started
-				</h2>
-				<p
-					class="mt-2 text-3xl leading-8 font-bold tracking-tight sm:text-4xl"
-					style:color={colors.secondary}
-				>
-					Ready to Book a Service?
-				</p>
-				<p class="mt-4 max-w-2xl text-xl lg:mx-auto" style:color={colors.textLight}>
-					Schedule an appointment with our healthcare professionals today.
-				</p>
-			</div>
-
-			<div class="mx-auto mt-10 max-w-xl border border-gray-200 bg-white shadow-lg sm:mt-12">
-				<div class="p-8">
-					<form class="grid grid-cols-1 gap-y-6">
-						<div>
-							<label for="service" class="block text-sm font-medium" style:color={colors.text}>
-								Select a Specific Service
-							</label>
-							<select
-								id="service"
-								name="service"
-								value={selectedService}
-								onchange={handleSelectChange}
-								class="mt-1 block w-full border border-gray-300 px-3 py-2 focus:outline-none sm:text-sm"
-								style:border-color={colors.primary}
-							>
-								<option value="">Select a service...</option>
-
-								<optgroup label="Vaccinations">
-									{#each services.vaccines as service (service.name)}
-										<option value={service.name}>
-											{service.name} - {service.price}
-										</option>
-									{/each}
-								</optgroup>
-
-								<optgroup label="Immune Support">
-									{#each services.immune as service (service.name)}
-										<option value={service.name}>
-											{service.name} - {service.price}
-										</option>
-									{/each}
-								</optgroup>
-
-								<optgroup label="Occupational Health">
-									{#each services.occupational as service (service.name)}
-										<option value={service.name}>
-											{service.name} - {service.price}
-										</option>
-									{/each}
-								</optgroup>
-
-								<optgroup label="Blood Tests">
-									{#each services.bloodtests as service (service.name)}
-										<option value={service.name}>
-											{service.name} - {service.price}
-										</option>
-									{/each}
-								</optgroup>
-							</select>
-						</div>
-
-						{#if showPricing && ctaServiceDetails}
-							<div class="my-2 border-t border-b border-gray-200 py-4">
-								<h3 class="mb-2 font-medium">Service Details</h3>
-								<div class="grid grid-cols-2 gap-2 text-sm">
-									<div>
-										<span class="block text-gray-500">Service:</span>
-										<span class="font-medium">{ctaServiceDetails.name}</span>
-									</div>
-									<div>
-										<span class="block text-gray-500">Price:</span>
-										<span class="font-medium" style:color={colors.primary}
-											>{ctaServiceDetails.price}</span
-										>
-									</div>
-									<div>
-										<span class="block text-gray-500">Duration:</span>
-										<span>{ctaServiceDetails.duration}</span>
-									</div>
-									{#if ctaServiceDetails.doses}
-										<div>
-											<span class="block text-gray-500">Doses:</span>
-											<span>{ctaServiceDetails.doses}</span>
-										</div>
-									{/if}
-								</div>
-								{#if ctaServiceDetails.details}
-									<div class="mt-2">
-										<span class="block text-gray-500">Details:</span>
-										<p class="text-sm">{ctaServiceDetails.details}</p>
-									</div>
-								{/if}
-							</div>
-						{/if}
-
-						<div>
-							<label for="full-name" class="block text-sm font-medium" style:color={colors.text}>
-								Full Name
-							</label>
-							<input
-								type="text"
-								name="full-name"
-								id="full-name"
-								class="mt-1 block w-full border border-gray-300 px-3 py-2 focus:outline-none sm:text-sm"
-								placeholder="John Smith"
-							/>
-						</div>
-						<div>
-							<label for="email" class="block text-sm font-medium" style:color={colors.text}>
-								Email
-							</label>
-							<input
-								type="email"
-								name="email"
-								id="email"
-								class="mt-1 block w-full border border-gray-300 px-3 py-2 focus:outline-none sm:text-sm"
-								placeholder="john@example.com"
-							/>
-						</div>
-						<div>
-							<label for="phone" class="block text-sm font-medium" style:color={colors.text}>
-								Phone Number
-							</label>
-							<input
-								type="tel"
-								name="phone"
-								id="phone"
-								class="mt-1 block w-full border border-gray-300 px-3 py-2 focus:outline-none sm:text-sm"
-								placeholder="+44 123 456 7890"
-							/>
-						</div>
-
-						<div class="grid grid-cols-2 gap-4">
-							<div>
-								<label for="date" class="block text-sm font-medium" style:color={colors.text}>
-									Preferred Date
-								</label>
-								<input
-									type="date"
-									name="date"
-									id="date"
-									class="mt-1 block w-full border border-gray-300 px-3 py-2 focus:outline-none sm:text-sm"
-								/>
-							</div>
-							<div>
-								<label for="time" class="block text-sm font-medium" style:color={colors.text}>
-									Preferred Time
-								</label>
-								<input
-									type="time"
-									name="time"
-									id="time"
-									class="mt-1 block w-full border border-gray-300 px-3 py-2 focus:outline-none sm:text-sm"
-								/>
-							</div>
-						</div>
-
-						<div>
-							<label for="message" class="block text-sm font-medium" style:color={colors.text}>
-								Additional Notes
-							</label>
-							<textarea
-								id="message"
-								name="message"
-								rows="4"
-								class="mt-1 block w-full border border-gray-300 px-3 py-2 focus:outline-none sm:text-sm"
-								placeholder="Any specific requirements or questions"
-							></textarea>
-						</div>
-						<div>
-							<button
-								type="submit"
-								class="inline-flex w-full items-center justify-center border border-transparent px-6 py-3 text-base font-medium text-white"
-								style:background-color={colors.primary}
-							>
-								Book Appointment
-							</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<section id="contact" class="py-12 md:py-20" style:background-color={colors.light}>
-		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<div class="mb-12 lg:text-center">
-				<h2 class="text-base font-semibold tracking-wide uppercase" style:color={colors.primary}>
-					Contact Us
-				</h2>
-				<p
-					class="mt-2 text-3xl leading-8 font-bold tracking-tight sm:text-4xl"
-					style:color={colors.secondary}
-				>
-					Get In Touch
-				</p>
-				<p class="mt-4 max-w-2xl text-xl lg:mx-auto" style:color={colors.textLight}>
-					Have questions about our services? Contact our team for more information.
-				</p>
-			</div>
-
-			<div class="mt-10 grid gap-8 md:grid-cols-3">
+			<div class="mt-16 text-center">
+				<p class="mb-6 text-slate-600">Can't find what you're looking for?</p>
 				<a
-					href="tel:+441908032992"
-					class="flex flex-col items-center border border-gray-200 p-6 text-center"
+					href="#contact"
+					class="flex items-center justify-center gap-2 font-semibold text-emerald-700 hover:text-emerald-600"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="40"
-						height="40"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="mb-4"
-						style:color={colors.primary}
-					>
-						<path
-							d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
-						></path>
-					</svg>
-					<h3 class="mb-2 text-lg font-medium" style:color={colors.text}>Phone</h3>
-					<p style:color={colors.textLight}>+44 (0) 1908 03 2992</p>
-				</a>
-
-				<a
-					href="mailto:info@stemaxconsult.com"
-					class="flex flex-col items-center border border-gray-200 p-6 text-center"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="40"
-						height="40"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="mb-4"
-						style:color={colors.primary}
-					>
-						<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-						></path>
-						<polyline points="22,6 12,13 2,6"></polyline>
-					</svg>
-					<h3 class="mb-2 text-lg font-medium" style:color={colors.text}>Email</h3>
-					<p style:color={colors.textLight}>info@stemaxconsult.com</p>
-				</a>
-
-				<a
-					href="https://maps.google.com/?q=Ground+Floor+Suite+F,+Old+Stratford+Business+Park,+Falcon+Drive,+Old+Stratford,+Milton+Keynes+MK19+6FG,+UK"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="flex flex-col items-center border border-gray-200 p-6 text-center"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="40"
-						height="40"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="mb-4"
-						style:color={colors.primary}
-					>
-						<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-						<circle cx="12" cy="10" r="3"></circle>
-					</svg>
-					<h3 class="mb-2 text-lg font-medium" style:color={colors.text}>Address</h3>
-					<p style:color={colors.textLight}>Ground Floor Suite F</p>
-					<p style:color={colors.textLight}>Old Stratford Business Park</p>
-					<p style:color={colors.textLight}>Falcon Drive, Old Stratford</p>
-					<p style:color={colors.textLight}>Milton Keynes MK19 6FG</p>
+					Contact our support team <ChevronRight class="h-4 w-4" />
 				</a>
 			</div>
 		</div>
 	</section>
 
-	<section id="clinical-trials" class="py-20" style="background-color: {colors.background}">
+	<section id="clinical-trials" class="bg-white py-20 lg:py-28">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<div class="mb-12 text-center">
-				<h2 class="text-3xl font-bold tracking-tight sm:text-4xl" style="color: {colors.secondary}">
+			<div class="mx-auto mb-16 max-w-3xl md:text-center">
+				<h2 class="text-base leading-7 font-semibold tracking-wide text-emerald-600 uppercase">
+					Research & Development
+				</h2>
+				<h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
 					Current Clinical Trials
 				</h2>
-				<p class="mt-4 text-lg" style="color: {colors.textLight}">
-					Participate in medical research to help pave the way for future treatments.
+				<p class="mt-4 text-lg text-slate-600">
+					Participate in medical research to help pave the way for future treatments. All related
+					evaluations are complimentary.
 				</p>
 			</div>
 
 			<div class="grid gap-8 md:grid-cols-2">
-				{#each studies as study (study.title)}
+				{#each studies as study}
 					<div
-						class="flex flex-col rounded-2xl border bg-white p-8 shadow-sm transition-shadow hover:shadow-md"
-						style="border-color: {colors.primaryLight}33"
+						class="flex flex-col rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-lg"
 					>
-						<div class="mb-4 flex items-center justify-between">
+						<div class="mb-5 flex items-center justify-between">
 							<span
-								class="rounded-full px-3 py-1 text-xs font-semibold"
-								style="background-color: {study.status === 'Enrolling'
-									? colors.primary + '22'
-									: '#fee2e2'};
-									 color: {study.status === 'Enrolling' ? colors.primary : '#ef4444'}"
+								class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset"
+								class:bg-emerald-50={study.status === 'Enrolling'}
+								class:text-emerald-700={study.status === 'Enrolling'}
+								class:ring-emerald-600={study.status === 'Enrolling'}
+								class:bg-slate-50={study.status !== 'Enrolling'}
+								class:text-slate-600={study.status !== 'Enrolling'}
+								class:ring-slate-500={study.status !== 'Enrolling'}
 							>
 								{study.status}
 							</span>
 						</div>
 
-						<h3 class="mb-3 text-xl font-bold" style="color: {colors.secondary}">
+						<h3 class="mb-3 text-xl font-bold text-slate-900">
 							{study.title}
 						</h3>
 
-						<p class="mb-6 flex-grow text-base" style="color: {colors.text}">
+						<p class="mb-8 flex-grow leading-relaxed text-slate-600">
 							{study.description}
 						</p>
 
@@ -1750,180 +613,414 @@
 								href={study.link}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-semibold text-white transition-colors"
-								style="background-color: {colors.primary}; hover:background-color: {colors.primaryDark}"
+								class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-50 px-4 py-2.5 text-sm font-semibold text-emerald-700 transition-colors hover:bg-emerald-100"
 							>
-								Register Interest <ExternalLink class="ml-2 h-4 w-4" />
+								Register Interest <ExternalLink class="h-4 w-4" />
 							</a>
 						{:else}
-							<button
-								disabled
-								class="inline-flex cursor-not-allowed items-center justify-center rounded-lg bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-400"
+							<div
+								class="inline-flex cursor-not-allowed items-center justify-center rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-medium text-slate-400"
 							>
 								Registration Closed
-							</button>
+							</div>
 						{/if}
 					</div>
 				{/each}
 			</div>
+		</div>
+	</section>
 
-			<div class="mt-16 rounded-2xl p-8 text-center" style="background-color: {colors.primary}11">
-				<h4 class="mb-4 text-xl font-bold" style="color: {colors.primary}">Need Assistance?</h4>
-				<p class="mb-6" style="color: {colors.text}">
-					All related office visits, medical evaluations, and study medication are provided at no
-					charge. Financial compensation for time and travel may be provided.
+	<section id="about" class="bg-slate-900 py-20 text-white lg:py-28">
+		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<div class="mx-auto mb-16 max-w-3xl text-center">
+				<h2 class="text-base leading-7 font-semibold tracking-wide text-emerald-400 uppercase">
+					About Us
+				</h2>
+				<h2 class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+					Meet Our Specialists
+				</h2>
+				<p class="mt-6 text-lg leading-8 text-slate-300">
+					Our experienced healthcare professionals have been providing exceptional services to
+					businesses across the UK since 2007.
 				</p>
-				<div class="flex flex-col justify-center gap-4 sm:flex-row">
-					<a
-						href="tel:01908032992"
-						class="flex items-center justify-center gap-2 font-bold"
-						style="color: {colors.primary}"
+			</div>
+
+			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+				{#each team as member}
+					<div
+						class="group hover:bg-slate-750 relative rounded-2xl bg-slate-800 p-6 shadow-xl ring-1 ring-white/10 transition-colors"
 					>
-						<Phone class="h-5 w-5" /> 01908 032992
-					</a>
-					<span class="hidden text-gray-300 sm:block">|</span>
-					<a
-						href="https://stemaxconsult.com/contact-us"
-						class="flex items-center justify-center gap-2 font-bold"
-						style="color: {colors.primary}"
-					>
-						<ClipboardCheck class="h-5 w-5" /> General Interest Form
-					</a>
+						<div
+							class="mx-auto mb-6 h-24 w-24 overflow-hidden rounded-full ring-4 ring-emerald-500/20"
+						>
+							<div
+								class="{member.color} flex h-full w-full items-center justify-center text-2xl font-bold text-white"
+							>
+								{member.name
+									.split(' ')
+									.map((n) => n[0])
+									.join('')}
+							</div>
+						</div>
+						<div class="text-center">
+							<h3 class="text-lg font-bold text-white">{member.name}</h3>
+							<p class="mt-1 text-sm font-medium text-emerald-400">{member.role}</p>
+							<p class="mt-4 text-sm leading-6 text-slate-300">
+								{member.bio}
+							</p>
+						</div>
+					</div>
+				{/each}
+			</div>
+		</div>
+	</section>
+
+	<section id="testimonials" class="bg-emerald-800 py-20 lg:py-28">
+		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<h2 class="mb-16 text-center text-3xl font-bold text-white">What Our Clients Say</h2>
+			<div class="grid gap-8 md:grid-cols-3">
+				{#each testimonials as testimonial}
+					<div class="relative rounded-2xl bg-white/10 p-8 ring-1 ring-white/20 backdrop-blur-sm">
+						<div class="absolute -top-4 -left-2 text-emerald-400 opacity-50">
+							<svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"
+								><path
+									d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z"
+								></path></svg
+							>
+						</div>
+						<p class="relative z-10 text-lg leading-relaxed font-medium text-white">
+							"{testimonial.quote}"
+						</p>
+						<div class="mt-6 border-t border-white/10 pt-6">
+							<p class="font-bold text-white">{testimonial.author}</p>
+							<p class="text-sm text-emerald-200">{testimonial.position}</p>
+						</div>
+					</div>
+				{/each}
+			</div>
+		</div>
+	</section>
+
+	<section id="book" class="bg-white py-20 lg:py-28">
+		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<div class="grid grid-cols-1 gap-16 lg:grid-cols-2">
+				<div>
+					<h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+						Ready to Book?
+					</h2>
+					<p class="mt-4 text-lg text-slate-600">
+						Schedule an appointment with our healthcare professionals today. Use the form to request
+						a specific service or general consultation.
+					</p>
+
+					<div class="mt-10 space-y-6">
+						<div class="flex items-center gap-4">
+							<div
+								class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700"
+							>
+								<Phone class="h-6 w-6" />
+							</div>
+							<div>
+								<p class="text-sm font-medium text-slate-500">Call Us</p>
+								<p class="text-lg font-bold text-slate-900">+44 (0) 1908 03 2992</p>
+							</div>
+						</div>
+						<div class="flex items-center gap-4">
+							<div
+								class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700"
+							>
+								<Mail class="h-6 w-6" />
+							</div>
+							<div>
+								<p class="text-sm font-medium text-slate-500">Email Us</p>
+								<p class="text-lg font-bold text-slate-900">info@stemaxconsult.com</p>
+							</div>
+						</div>
+						<div class="flex items-center gap-4">
+							<div
+								class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700"
+							>
+								<MapPin class="h-6 w-6" />
+							</div>
+							<div>
+								<p class="text-sm font-medium text-slate-500">Visit Us</p>
+								<p class="text-lg font-bold text-slate-900">
+									Old Stratford Business Park, Milton Keynes
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="rounded-3xl bg-slate-50 p-8 shadow-sm ring-1 ring-slate-200 lg:p-10">
+					<form class="space-y-6">
+						<div>
+							<label for="service-select" class="block text-sm leading-6 font-medium text-slate-900"
+								>Select Service</label
+							>
+							<div class="mt-2">
+								<select
+									id="service-select"
+									bind:value={selectedService}
+									onchange={handleSelectChange}
+									class="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset focus:ring-2 focus:ring-emerald-600 focus:ring-inset sm:text-sm sm:leading-6"
+								>
+									<option value="">-- Choose a service --</option>
+									<optgroup label="Vaccinations">
+										{#each services.vaccines as s}
+											<option value={s.name}>{s.name} - {s.price}</option>
+										{/each}
+									</optgroup>
+									<optgroup label="Occupational Health">
+										{#each services.occupational as s}
+											<option value={s.name}>{s.name} - {s.price}</option>
+										{/each}
+									</optgroup>
+								</select>
+							</div>
+						</div>
+
+						{#if showPricing && ctaServiceDetails}
+							<div class="rounded-xl bg-white p-4 ring-1 ring-slate-200">
+								<div class="mb-2 flex items-center justify-between">
+									<h4 class="font-semibold text-slate-900">{ctaServiceDetails.name}</h4>
+									<span class="font-bold text-emerald-700">{ctaServiceDetails.price}</span>
+								</div>
+								<p class="text-sm text-slate-500">{ctaServiceDetails.duration}</p>
+							</div>
+						{/if}
+
+						<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+							<div>
+								<label for="full-name" class="block text-sm leading-6 font-medium text-slate-900"
+									>Full Name</label
+								>
+								<div class="mt-2">
+									<input
+										type="text"
+										id="full-name"
+										class="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600 focus:ring-inset sm:text-sm sm:leading-6"
+										placeholder="John Doe"
+									/>
+								</div>
+							</div>
+							<div>
+								<label for="email" class="block text-sm leading-6 font-medium text-slate-900"
+									>Email</label
+								>
+								<div class="mt-2">
+									<input
+										type="email"
+										id="email"
+										class="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600 focus:ring-inset sm:text-sm sm:leading-6"
+										placeholder="you@example.com"
+									/>
+								</div>
+							</div>
+						</div>
+
+						<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+							<div>
+								<label for="date" class="block text-sm leading-6 font-medium text-slate-900"
+									>Preferred Date</label
+								>
+								<div class="mt-2">
+									<input
+										type="date"
+										id="date"
+										class="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset focus:ring-2 focus:ring-emerald-600 focus:ring-inset sm:text-sm sm:leading-6"
+									/>
+								</div>
+							</div>
+							<div>
+								<label for="phone" class="block text-sm leading-6 font-medium text-slate-900"
+									>Phone</label
+								>
+								<div class="mt-2">
+									<input
+										type="tel"
+										id="phone"
+										class="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600 focus:ring-inset sm:text-sm sm:leading-6"
+										placeholder="+44..."
+									/>
+								</div>
+							</div>
+						</div>
+
+						<div>
+							<label for="notes" class="block text-sm leading-6 font-medium text-slate-900"
+								>Additional Notes</label
+							>
+							<div class="mt-2">
+								<textarea
+									id="notes"
+									rows="3"
+									class="block w-full rounded-xl border-0 py-3 text-slate-900 shadow-sm ring-1 ring-slate-300 ring-inset placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600 focus:ring-inset sm:text-sm sm:leading-6"
+								></textarea>
+							</div>
+						</div>
+
+						<button
+							type="submit"
+							class="w-full rounded-xl bg-emerald-700 px-3.5 py-4 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+						>
+							Request Appointment
+						</button>
+					</form>
 				</div>
 			</div>
 		</div>
 	</section>
-</div>
+</main>
 
-<footer class="border-t border-gray-200 py-8" style:background-color={colors.secondary}>
-	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<div class="grid grid-cols-1 gap-8 md:grid-cols-4">
-			<div>
-				<div class="mb-4 text-xl font-bold text-white">
-					STEMAX
-					<span class="ml-2 text-xs font-normal text-gray-400">Healthcare Consultancy</span>
-				</div>
-				<p class="mb-4 text-gray-400">
-					Providing quality healthcare services to businesses across the UK since 2007.
-				</p>
-				<p class="text-sm text-gray-400">
-					VAT Registration: GB116 9732 02<br />
-					Companies House: 07708197
-				</p>
-				<div class="mt-4">
-					<p class="mb-1 text-xs text-gray-400">Regulated by Care Quality Commission</p>
-					<a
-						href="https://www.cqc.org.uk/provider/1-7805398732/registration-info"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="inline-block"
-					>
-						<div class="h-6.25 w-auto rounded border-2 border-gray-400 p-1 text-xs text-white">
-							[CQC Image]
+{#if modalOpen && selectedServiceDetails}
+	<div class="relative z-50" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+		<div
+			transition:fade={{ duration: 300 }}
+			class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
+		></div>
+
+		<div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+			<div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+				<div
+					transition:fly={{ y: 20, duration: 300 }}
+					class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl"
+				>
+					<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+						<div class="sm:flex sm:items-start">
+							<div class="mt-3 w-full text-center sm:mt-0 sm:text-left">
+								<div class="mb-6 flex items-center justify-between">
+									<h3 class="text-2xl leading-6 font-bold text-slate-900" id="modal-title">
+										{selectedServiceDetails.name}
+									</h3>
+									<button
+										onclick={closeModal}
+										class="rounded-full bg-slate-100 p-2 text-slate-400 hover:bg-slate-200 hover:text-slate-500"
+									>
+										<X class="h-5 w-5" />
+									</button>
+								</div>
+
+								<div class="mb-8 rounded-xl bg-slate-50 p-6 ring-1 ring-slate-200">
+									<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+										<div>
+											<p class="text-sm font-medium text-slate-500">Price</p>
+											<p class="text-xl font-bold text-emerald-700">
+												{selectedServiceDetails.price}
+											</p>
+										</div>
+										<div>
+											<p class="text-sm font-medium text-slate-500">Duration</p>
+											<p class="text-base text-slate-900">{selectedServiceDetails.duration}</p>
+										</div>
+										{#if selectedServiceDetails.doses}
+											<div>
+												<p class="text-sm font-medium text-slate-500">Required Doses</p>
+												<p class="text-base text-slate-900">
+													{selectedServiceDetails.doses}
+												</p>
+											</div>
+										{/if}
+									</div>
+									{#if selectedServiceDetails.details}
+										<div class="mt-4 border-t border-slate-200 pt-4">
+											<p class="text-sm text-slate-600">{selectedServiceDetails.details}</p>
+										</div>
+									{/if}
+								</div>
+
+								<div class="rounded-xl border border-emerald-100 bg-emerald-50/50 p-6">
+									<h4 class="mb-4 font-semibold text-emerald-900">Quick Booking Request</h4>
+									<form class="space-y-4">
+										<div class="grid grid-cols-2 gap-4">
+											<input
+												type="text"
+												placeholder="Name"
+												class="w-full rounded-lg border-slate-300 py-2.5 text-sm focus:ring-emerald-600"
+											/>
+											<input
+												type="tel"
+												placeholder="Phone"
+												class="w-full rounded-lg border-slate-300 py-2.5 text-sm focus:ring-emerald-600"
+											/>
+										</div>
+										<button
+											class="w-full rounded-lg bg-emerald-700 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-emerald-800"
+										>
+											Submit Request
+										</button>
+									</form>
+								</div>
+							</div>
 						</div>
-					</a>
+					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+{/if}
+
+<footer class="bg-slate-900 py-12 text-slate-400">
+	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div class="grid grid-cols-1 gap-12 lg:grid-cols-4">
+			<div class="space-y-4">
+				<div class="flex items-center gap-2">
+					<div
+						class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-white"
+					>
+						<span class="font-bold">S</span>
+					</div>
+					<span class="text-xl font-bold text-white">STEMAX</span>
+				</div>
+				<p class="text-sm leading-6">
+					Providing quality healthcare services to businesses across the UK since 2007. Regulated by
+					Care Quality Commission.
+				</p>
+				<div class="flex gap-4"></div>
+			</div>
 
 			<div>
-				<h3 class="mb-4 font-medium text-white">Services</h3>
-				<ul class="space-y-2">
-					<li><a href="#" class="text-gray-400 hover:text-white">Vaccinations</a></li>
-					<li><a href="#" class="text-gray-400 hover:text-white">Immune Support</a></li>
-					<li>
-						<a href="#" class="text-gray-400 hover:text-white">Occupational Health</a>
-					</li>
-					<li><a href="#" class="text-gray-400 hover:text-white">Blood Tests</a></li>
+				<h3 class="text-sm leading-6 font-semibold text-white">Services</h3>
+				<ul class="mt-4 space-y-2 text-sm">
+					<li><a href="#services" class="hover:text-emerald-400">Vaccinations</a></li>
+					<li><a href="#services" class="hover:text-emerald-400">Immune Support</a></li>
+					<li><a href="#services" class="hover:text-emerald-400">Occupational Health</a></li>
+					<li><a href="#services" class="hover:text-emerald-400">Blood Tests</a></li>
 				</ul>
 			</div>
 
 			<div>
-				<h3 class="mb-4 font-medium text-white">Company</h3>
-				<ul class="space-y-2">
-					<li><a href="#about" class="text-gray-400 hover:text-white">About Us</a></li>
-					<li><a href="#services" class="text-gray-400 hover:text-white">Services</a></li>
-					<li>
-						<a href="#testimonials" class="text-gray-400 hover:text-white">Testimonials</a>
-					</li>
-					<li><a href="#contact" class="text-gray-400 hover:text-white">Contact</a></li>
+				<h3 class="text-sm leading-6 font-semibold text-white">Company</h3>
+				<ul class="mt-4 space-y-2 text-sm">
+					<li><a href="#about" class="hover:text-emerald-400">About Us</a></li>
+					<li><a href="#testimonials" class="hover:text-emerald-400">Testimonials</a></li>
+					<li><a href="#clinical-trials" class="hover:text-emerald-400">Clinical Trials</a></li>
+					<li><a href="#contact" class="hover:text-emerald-400">Contact</a></li>
 				</ul>
 			</div>
 
 			<div>
-				<h3 class="mb-4 font-medium text-white">Contact</h3>
-				<ul class="space-y-2">
-					<li class="flex items-start">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="mt-0.5 mr-2 h-5 w-5 text-gray-400"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						>
-							<path
-								d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
-							></path>
-						</svg>
-						<a href="tel:+441908032992" class="text-gray-400">+44 (0) 1908 03 2992</a>
+				<h3 class="text-sm leading-6 font-semibold text-white">Contact</h3>
+				<ul class="mt-4 space-y-3 text-sm">
+					<li class="flex items-start gap-3">
+						<MapPin class="h-5 w-5 shrink-0 text-emerald-500" />
+						<span>Old Stratford Business Park,<br />Milton Keynes MK19 6FG</span>
 					</li>
-					<li class="flex items-start">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="mt-0.5 mr-2 h-5 w-5 text-gray-400"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						>
-							<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-							></path>
-							<polyline points="22,6 12,13 2,6"></polyline>
-						</svg>
-						<a href="mailto:info@stemaxconsult.com" class="text-gray-400">info@stemaxconsult.com</a>
+					<li class="flex items-center gap-3">
+						<Phone class="h-5 w-5 shrink-0 text-emerald-500" />
+						<a href="tel:+441908032992" class="hover:text-white">+44 (0) 1908 03 2992</a>
 					</li>
-					<li class="flex items-start">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="mt-0.5 mr-2 h-5 w-5 text-gray-400"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
+					<li class="flex items-center gap-3">
+						<Mail class="h-5 w-5 shrink-0 text-emerald-500" />
+						<a href="mailto:info@stemaxconsult.com" class="hover:text-white"
+							>info@stemaxconsult.com</a
 						>
-							<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-							<circle cx="12" cy="10" r="3"></circle>
-						</svg>
-						<a
-							href="https://maps.google.com/?q=Ground+Floor+Suite+F,+Old+Stratford+Business+Park,+Falcon+Drive,+Old+Stratford,+Milton+Keynes+MK19+6FG,+UK"
-							target="_blank"
-							rel="noopener noreferrer"
-							class="text-gray-400 transition-colors hover:text-white"
-						>
-							Milton Keynes MK19 6FG
-						</a>
 					</li>
 				</ul>
 			</div>
 		</div>
-
-		<div class="mt-8 border-t border-gray-800 pt-8">
-			<p class="text-center text-sm text-gray-400">
-				© {currentYear} Stemax Consult Healthcare Services Ltd. All rights reserved.
-			</p>
-			<p class="text-center text-sm text-gray-400">Made by Praful Munikumar</p>
+		<div class="mt-12 border-t border-slate-800 pt-8 text-center text-xs">
+			<p>&copy; {currentYear} Stemax Consult Healthcare Services Ltd. All rights reserved.</p>
 		</div>
 	</div>
 </footer>
