@@ -7,7 +7,7 @@
 		{
 			quote:
 				'Stemax Consultancy provided excellent occupational health services for our company. Their professional approach and attention to detail impressed us greatly.',
-			author: 'John Dunningham',
+			author: 'John Duningham',
 			position: 'HR Director, Global Logistics Ltd'
 		},
 		{
