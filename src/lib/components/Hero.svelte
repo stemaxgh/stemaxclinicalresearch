@@ -63,13 +63,13 @@
 					<div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
 						<div class="sm:flex">
 							<a
-								href="#run-clinical-trials"
+								href="#clinical-research-services"
 								class="flex items-center justify-center bg-emerald-700 px-8 py-3 text-base font-medium text-white md:px-10 md:py-4 md:text-lg"
 							>
 								For Sponsors
 							</a>
 							<a
-								href="#volunteer-experience"
+								href="/volunteer-paid-clinical-trials"
 								class="bg-yellow-500-400 mt-3 flex items-center justify-center border border-white/20 bg-black/40 p-6 px-8 py-3 text-base font-medium text-white backdrop-blur-sm sm:mt-0 sm:ml-3 md:px-10 md:py-4 md:text-lg"
 							>
 								Volunteer For A Study
