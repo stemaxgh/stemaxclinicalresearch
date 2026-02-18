@@ -8,6 +8,32 @@
 	function toggleMobileMenu() {
 		mobileMenuOpen = !mobileMenuOpen;
 	}
+
+	// Single source of truth for all navigation links
+	const navLinks = [
+		{
+			label: 'Pharmacovigilance Solutions',
+			href: '/clinical-research-services#pharmacovigilance-solutions',
+			isActive: true // Preserves original active background styling
+		},
+		{
+			label: 'Clinical Research Services',
+			href: '/clinical-research-services#clinical-research-services'
+		},
+		{
+			label: 'Volunteer In A Trial',
+			href: '/volunteer-paid-clinical-trials'
+		},
+		{
+			label: 'Locate Clinic',
+			href: '#location'
+		},
+		{
+			label: 'Careers',
+			href: '/',
+			isCta: true // Preserves original primary color button styling
+		}
+	];
 </script>
 
 <RegionSwitcher />
@@ -17,7 +43,8 @@
 >
 	<div class="mx-auto max-w-7xl py-3">
 		<div class="flex h-16 items-center justify-between">
-			<div class="flex items-end gap-3">
+			<!-- logo -->
+			<a href="/" class="flex items-end gap-3 transition-opacity hover:opacity-90">
 				<img src="/favicon.png" alt="STEMAX Logo" class="h-10 w-10" />
 				<div class="flex flex-col">
 					<span class="font-heading text-2xl leading-none font-bold tracking-tight text-slate-900">
@@ -29,20 +56,14 @@
 						Clinical Research
 					</span>
 				</div>
-			</div>
+			</a>
 
 			<nav class="hidden items-center justify-end space-x-10 lg:flex">
-				<a href="#pharmacovigilance-solutions" class="text-base font-medium hover:text-emerald-700">
-					Pharmacovigilance Solutions
-				</a>
-				<a href="#run-clinical-trials" class="text-base font-medium hover:text-emerald-700">
-					Run Clinical Trials
-				</a>
-				<a href="#volunteer-experience" class="text-base font-medium hover:text-emerald-700">
-					Volunteer In A Trial
-				</a>
-				<a href="#location" class="text-base font-medium hover:text-emerald-700"> Locate Clinic </a>
-				<a href="/" class="text-base font-medium hover:text-emerald-700"> Careers </a>
+				{#each navLinks as link}
+					<a href={link.href} class="text-base font-medium hover:text-emerald-700">
+						{link.label}
+					</a>
+				{/each}
 			</nav>
 
 			<div class="flex lg:hidden">
@@ -91,43 +112,35 @@
 	{#if mobileMenuOpen}
 		<div class="lg:hidden">
 			<div class="space-y-1 bg-white pt-2 pb-4">
-				<a
-					href="#services"
-					class="block border-l-4 px-4 py-2 text-base font-medium"
-					style="border-color: {colors.primary}; background-color: #f3f4f6"
-					onclick={toggleMobileMenu}
-				>
-					Pharmacovigilance Solutions
-				</a>
-				<a
-					href="#clinical-trials"
-					class="block border-l-4 border-transparent px-4 py-2 text-base font-medium hover:bg-gray-50"
-					onclick={toggleMobileMenu}
-				>
-					Run Clinical Trials
-				</a>
-				<a
-					href="#about"
-					class="block border-l-4 border-transparent px-4 py-2 text-base font-medium"
-					onclick={toggleMobileMenu}
-				>
-					Volunteer In A Trial
-				</a>
-				<a
-					href="#testimonials"
-					class="block border-l-4 border-transparent px-4 py-2 text-base font-medium"
-					onclick={toggleMobileMenu}
-				>
-					Locate Clinic
-				</a>
-				<a
-					href="#book"
-					class="block px-4 py-2 text-base font-medium"
-					style="background-color: {colors.primary}; color: {colors.light}"
-					onclick={toggleMobileMenu}
-				>
-					Careers
-				</a>
+				{#each navLinks as link}
+					{#if link.isCta}
+						<a
+							href={link.href}
+							class="block px-4 py-2 text-base font-medium"
+							style="background-color: {colors.primary}; color: {colors.light}"
+							onclick={toggleMobileMenu}
+						>
+							{link.label}
+						</a>
+					{:else if link.isActive}
+						<a
+							href={link.href}
+							class="block border-l-4 px-4 py-2 text-base font-medium"
+							style="border-color: {colors.primary}; background-color: #f3f4f6"
+							onclick={toggleMobileMenu}
+						>
+							{link.label}
+						</a>
+					{:else}
+						<a
+							href={link.href}
+							class="block border-l-4 border-transparent px-4 py-2 text-base font-medium hover:bg-gray-50"
+							onclick={toggleMobileMenu}
+						>
+							{link.label}
+						</a>
+					{/if}
+				{/each}
 			</div>
 		</div>
 	{/if}

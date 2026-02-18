@@ -1,5 +1,7 @@
 <script>
 	import ServiceModal from './ServiceModal.svelte';
+	import { partnerLogos } from '$lib/data';
+	import SponsorBanner from '$lib/components/SponsorBanner.svelte';
 
 	// Define colors and import centralized clinical data helper functions [cite: 12, 13]
 	import {
@@ -58,7 +60,9 @@
 	);
 </script>
 
-<section id="run-clinical-trials" class="py-12 md:py-20" style:background-color={colors.background}>
+<SponsorBanner logos={partnerLogos} id="clinical-research-services" />
+
+<section class="py-12 md:py-20" style:background-color={colors.background}>
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="mb-12 lg:text-center">
 			<h2 class="text-base font-semibold tracking-wide uppercase" style:color={colors.primary}>

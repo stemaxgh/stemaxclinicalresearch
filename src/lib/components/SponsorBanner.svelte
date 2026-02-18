@@ -5,14 +5,15 @@
 
 		speed = '10s', // Adjusted slightly for the larger array size
 		title = 'Trusted Partners',
-		className = ''
+		className = '',
+		id = ''
 	} = $props();
 
 	// Guarantees the row is long enough to span ultra-wide monitors without blank gaps
 	const duplicatedLogos = [...logos, ...logos];
 </script>
 
-<section class="border-t border-b border-gray-200 pt-8 pb-12 {className}">
+<section {id} class="border-t border-b border-gray-200 pt-8 pb-12 {className}">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		{#if title}
 			<div class="mb-10 text-center">

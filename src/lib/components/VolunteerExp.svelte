@@ -102,7 +102,11 @@
 	});
 </script>
 
-<section class="relative overflow-hidden py-12 md:py-20" style:background-color={colors.background}>
+<section
+	id="journey"
+	class="relative overflow-hidden py-12 md:py-20"
+	style:background-color={colors.background}
+>
 	<div
 		class="pointer-events-none absolute inset-0 z-0 hidden bg-gradient-to-br from-blue-50 via-emerald-50 to-purple-50 lg:block"
 	></div>
